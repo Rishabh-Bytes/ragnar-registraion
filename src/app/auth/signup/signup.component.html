@@ -1,0 +1,196 @@
+<form
+  class="form-container"
+  [formGroup]="signupForm"
+  (submit)="createAccount()"
+>
+  <h1 class="register-label">Create an Account</h1>
+  <h2 class="register-sub-label" *ngIf="1">
+    Already have Ragnar Account?
+    <a class="link" [routerLink]="routes.LOGIN">Sign in</a>
+    now.
+  </h2>
+  <div class="input-box">
+    <div class="input-main-wrapper">
+      <mat-icon
+        class="icon"
+        aria-hidden="false"
+        fontIcon="perm_identity"
+      ></mat-icon>
+      <mat-form-field class="input-wrapper">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="firstName" />
+      </mat-form-field>
+      <div
+        class="input-error"
+        *ngIf="
+          (signupForm.controls['firstName'].invalid &&
+            (signupForm.controls['firstName'].dirty ||
+              signupForm.controls['firstName'].touched)) ||
+          formSubmitted
+        "
+      >
+        <p
+          class="text-danger"
+          *ngIf="
+            signupForm.controls['firstName'].errors &&
+            signupForm.controls['firstName'].errors['required']
+          "
+        >
+          First Name is required
+        </p>
+      </div>
+    </div>
+    <div class="input-main-wrapper no-padding">
+      <mat-form-field class="input-wrapper">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="lastName" />
+      </mat-form-field>
+      <div
+        class="input-error"
+        *ngIf="
+          (signupForm.controls['lastName'].invalid &&
+            (signupForm.controls['lastName'].dirty ||
+              signupForm.controls['lastName'].touched)) ||
+          formSubmitted
+        "
+      >
+        <p
+          class="text-danger"
+          *ngIf="
+            signupForm.controls['lastName'].errors &&
+            signupForm.controls['lastName'].errors['required']
+          "
+        >
+          Last Name is required
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="input-main-wrapper">
+    <mat-icon
+      class="icon"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="date_range"
+    ></mat-icon>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Birthdate</mat-label>
+      <input type="date" matInput formControlName="bornAt" />
+    </mat-form-field>
+    <div
+      class="input-error"
+      *ngIf="
+        (signupForm.controls['bornAt'].invalid &&
+          (signupForm.controls['bornAt'].dirty ||
+            signupForm.controls['bornAt'].touched)) ||
+        formSubmitted
+      "
+    >
+      <p
+        class="text-danger"
+        *ngIf="
+          signupForm.controls['bornAt'].errors &&
+          signupForm.controls['bornAt'].errors['required']
+        "
+      >
+        Birthdate is required
+      </p>
+    </div>
+  </div>
+  <div class="input-main-wrapper">
+    <mat-icon
+      class="icon"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="mail_outline"
+    ></mat-icon>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        placeholder="Ex. pat@example.com"
+      />
+    </mat-form-field>
+    <div
+      class="input-error"
+      *ngIf="
+        (signupForm.controls['email'].invalid &&
+          (signupForm.controls['email'].dirty ||
+            signupForm.controls['email'].touched)) ||
+        formSubmitted
+      "
+    >
+      <p
+        class="text-danger"
+        *ngIf="
+          signupForm.controls['email'].errors &&
+          signupForm.controls['email'].errors['required']
+        "
+      >
+        Email is required
+      </p>
+      <p
+        class="text-danger"
+        *ngIf="
+          signupForm.controls['email'].errors &&
+          signupForm.controls['email'].errors['pattern']
+        "
+      >
+        Please enter valid email
+      </p>
+      <p
+        class="text-danger"
+        *ngIf="
+          signupForm.controls['email'].errors &&
+          signupForm.controls['email'].errors['pattern']
+        "
+      >
+        Please enter valid email
+      </p>
+    </div>
+  </div>
+  <div class="input-main-wrapper">
+    <mat-icon
+      class="icon"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="lock_open"
+    ></mat-icon>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        matInput
+        placeholder="Ex. pat@example.com"
+        formControlName="password"
+      />
+    </mat-form-field>
+    <div
+      class="input-error"
+      *ngIf="
+        (signupForm.controls['password'].invalid &&
+          (signupForm.controls['password'].dirty ||
+            signupForm.controls['password'].touched)) ||
+        formSubmitted
+      "
+    >
+      <p
+        class="text-danger"
+        *ngIf="
+          signupForm.controls['password'].errors &&
+          signupForm.controls['password'].errors['required']
+        "
+      >
+        Password is required
+      </p>
+    </div>
+  </div>
+
+  <div class="submit-btn">
+    <button type="submit" mat-raised-button color="primary">
+      Create Account
+    </button>
+  </div>
+</form>

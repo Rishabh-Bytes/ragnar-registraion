@@ -1,0 +1,21 @@
+export class User {
+  id: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  password: string = '';
+  bornAt: string = '';
+  dateOfBirth: string = '';
+  gender: string = '';
+  address: string = '';
+  phone: string = '';
+  pace: number = 0;
+  tShirtSize: string = '';
+  address2: string = '';
+  country: string = '';
+  city: string = '';
+  state: string = '';
+  zipCode: number = 0;
+  jwtToken: string = '';
+  registrationConfigId?: string = '';
+}

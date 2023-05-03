@@ -1,0 +1,117 @@
+<form class="form-container" [formGroup]="loginForm" (submit)="login()">
+  <h1 class="register-label">
+    Sign in to your Ragnar Account to register your team!
+  </h1>
+  <h2 class="register-sub-label" *ngIf="1">
+    Don't have a Ragnar Account?
+    <a
+      class="link"
+      [routerLink]="routes.SIGNUP + '/' + 'aDA342' + '/' + 'captain'"
+      >Create an Account</a
+    >
+    now.
+  </h2>
+  <div class="input-main-wrapper">
+    <mat-icon
+      class="icon"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="mail_outline"
+    ></mat-icon>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        placeholder="Ex. pat@example.com"
+      />
+    </mat-form-field>
+    <div
+      class="input-error"
+      *ngIf="
+        (loginForm.controls['email'].invalid &&
+          (loginForm.controls['email'].dirty ||
+            loginForm.controls['email'].touched)) ||
+        formSubmitted
+      "
+    >
+      <p
+        class="text-danger"
+        *ngIf="
+          loginForm.controls['email'].errors &&
+          loginForm.controls['email'].errors['required']
+        "
+      >
+        Email is required
+      </p>
+      <p
+        class="text-danger"
+        *ngIf="
+          loginForm.controls['email'].errors &&
+          loginForm.controls['email'].errors['pattern']
+        "
+      >
+        Please enter valid email
+      </p>
+    </div>
+    <p
+      class="text-danger"
+      *ngIf="
+        errorType === 'UserNotFoundException' && loginType !== 'groupVolunteer'
+      "
+    >
+      That account doesn't exist. Please try again or create an account.
+    </p>
+    <p
+      class="text-danger"
+      *ngIf="
+        errorType === 'UserNotFoundException' && loginType === 'groupVolunteer'
+      "
+    >
+      That account doesn't exist. Please try again or create an account.
+    </p>
+  </div>
+  <div class="input-main-wrapper">
+    <mat-icon
+      class="icon"
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="lock_open"
+    ></mat-icon>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password" />
+    </mat-form-field>
+    <div
+      class="input-error"
+      *ngIf="
+        (loginForm.controls['password'].invalid &&
+          (loginForm.controls['password'].dirty ||
+            loginForm.controls['password'].touched)) ||
+        formSubmitted
+      "
+    >
+      <p
+        class="text-danger"
+        *ngIf="
+          loginForm.controls['password'].errors &&
+          loginForm.controls['password'].errors['required']
+        "
+      >
+        Password is required
+      </p>
+      <p class="text-danger" *ngIf="errorType === 'NotAuthorizedException'">
+        Sorry, that password isn't correct. Need to reset your password?.
+      </p>
+    </div>
+  </div>
+
+  <div class="link forgot-margin" [routerLink]="routes.FORGOT_PASSWORD">
+    Forgot your Password?
+  </div>
+
+  <div class="submit-btn">
+    <button type="submit" mat-raised-button color="primary">Login</button>
+  </div>
+</form>
