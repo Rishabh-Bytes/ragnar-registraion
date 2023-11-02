@@ -6,9 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -16,13 +15,9 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    // MatButtonModule,
-    // MatFormFieldModule,
-    // MatInputModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
-
-  // exports: [MatButtonModule, MatFormFieldModule, MatInputModule],
-
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

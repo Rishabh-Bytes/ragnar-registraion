@@ -12,12 +12,13 @@ const routes: Routes = [
     component: AuthComponent,
     children: [
       {
-        path: 'registration/:eventType/:loginType',
+        path: 'create-account',
         component: SignupComponent,
       },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'login', component: LoginComponent },
       { path: 'change-password', component: ChangePasswordComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
     ],
   },
 ];

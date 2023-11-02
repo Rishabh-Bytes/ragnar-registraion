@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Nirav</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-      <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Nirav</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-3671226-1', 'auto');// add your tracking ID here.
+    ga('send', 'pageview');
+    ga('require', 'ec');
+  </script>
+  <!--(bake fullStory.html)-->
+
+  <script>
+    _affirm_config = {
+      "public_api_key": "06I5BBH3EKH3YNWG",
+      script: "https://cdn1-sandbox.affirm.com/js/v2/affirm.js"
+    };
+    (function (l, g, m, e, a, f, b) { var d, c = l[m] || {}, h = document.createElement(f), n = document.getElementsByTagName(f)[0], k = function (a, b, c) { return function () { a[b]._.push([c, arguments]) } }; c[e] = k(c, e, "set"); d = c[e]; c[a] = {}; c[a]._ = []; d._ = []; c[a][b] = k(c, a, b); a = 0; for (b = "set add save post open empty reset on off trigger ready setProduct".split(" "); a < b.length; a++)d[b[a]] = k(c, e, b[a]); a = 0; for (b = ["get", "token", "url", "items"]; a < b.length; a++)d[b[a]] = function () { }; h.async = !0; h.src = g[f]; n.parentNode.insertBefore(h, n); delete g[f]; d(g); l[m] = c })(window, _affirm_config, "affirm", "checkout", "ui", "script", "ready");
+            // Use your live public API Key and https://cdn1.affirm.com/js/v2/affirm.js script to point to Affirm production environment.
+  </script>
+
+  <script>var r; (n = r = r || {}).A = "identify", n.B = "trackPageView", n.C = "fireEmailCaptureEvent", n.D = "fireCustomGoal", n.E = "firePurchaseEvent"; var n = "//j.northbeam.io/ota-sp/cf82fd6e-0582-43f5-a12a-23ff61c2bcaf.js"; function t(n) { for (var e = [], r = 1; r < arguments.length; r++)e[r - 1] = arguments[r]; a.push({ fnName: n, args: e }) } var a = [], e = ((e = { _q: a })[r.A] = function (n, e) { return t(r.A, n, e) }, e[r.B] = function () { return t(r.B) }, e[r.C] = function (n, e) { return t(r.C, n, e) }, e[r.D] = function (n, e) { return t(r.D, n, e) }, e[r.E] = function (n) { return t(r.E, n) }, window.Northbeam = e, document.createElement("script")); e.async = !0, e.src = n, document.head.appendChild(e);</script>
 </head>
-  <body class="mat-typography">
-    <app-root></app-root>
-  </body>
+
+<body class="mat-typography">
+  <app-root></app-root>
+</body>
+
 </html>

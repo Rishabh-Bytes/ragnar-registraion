@@ -19,6 +19,7 @@ import {
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AuthComponent, SignupComponent, ForgotPasswordComponent, LoginComponent, ChangePasswordComponent],
@@ -31,6 +32,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatSnackBarModule
   ],
   providers: [
     {
@@ -39,4 +41,4 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     },
   ],
 })
-export class RegistrationModule {}
+export class AuthModule {}

@@ -1,0 +1,4 @@
+<div>
+    <app-stepper *ngIf="loginType == 'captain'" [step]="1" [steps]="['Info', 'Payment', 'Confirmation']"></app-stepper>
+    <router-outlet></router-outlet>
+</div>
