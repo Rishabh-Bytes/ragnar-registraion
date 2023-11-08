@@ -10,9 +10,10 @@ const routes: Routes = [
       import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'team-builder/:eventId/registration/:loginType',
+    path: 'team-builder/:eventId/registration',
     loadChildren: () =>
-      import('./registration/registration.module').then((m) => m.RegistrationModule)  },
+      import('./team-builder/team-builder.module').then((m) => m.TeamBuilderModule) 
+  },
 ];
 
 @NgModule({

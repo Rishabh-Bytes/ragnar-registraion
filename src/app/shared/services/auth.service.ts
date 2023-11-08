@@ -2,13 +2,28 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
+import { IRedirectParams } from '../helper/interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   apiUrl = environment.profilesBaseUrl;
-  constructor(private http: HttpClient) { }
+  private user: User
+  private redirectParams: IRedirectParams
+  constructor(private http: HttpClient) {
+
+    let user = sessionStorage.getItem('user'),
+      redirectParams = sessionStorage.getItem('redirect-params');
+
+    if (user) {
+      this.user = JSON.parse(user);
+    }
+
+    if (redirectParams) {
+      this.redirectParams = JSON.parse(redirectParams);
+    }
+  }
 
   login(loginDetails: any, userType: string) {
     console.log('adaddasasdas', loginDetails, userType);
@@ -22,9 +37,22 @@ export class AuthService {
     sessionStorage.setItem('user', JSON.stringify(user));
   }
 
+  getUser(): User {
+    return this.user;
+  }
+
+  setRedirectParams(stateName: string, params: Object = {}): void {
+    this.redirectParams = {
+      stateName: stateName,
+      params: params
+    };
+
+    sessionStorage.setItem('redirect-params', JSON.stringify(this.redirectParams));
+  }
+
   createUser(user: User) {
 
-    const url =  this.apiUrl +'/apiCreateUser'
+    const url = this.apiUrl + '/apiCreateUser'
     const content = user;
 
     return this.http.post(url, content).toPromise();
@@ -32,18 +60,18 @@ export class AuthService {
   }
 
   /**
-         * Update Profiles ID.
-         * @email email
-         * @profilesId profiles Id
-         * @return SUCCESS
-         */
-  updateProfileId(email: string, profilesId: string){
+   * Update Profiles ID.
+   * @email email
+   * @profilesId profiles Id
+   * @return SUCCESS
+  */
+  updateProfileId(email: string, profilesId: string) {
     let url_ = this.apiUrl + "/registrations/updateProfileId";
 
     if (email === undefined || email === null)
-        throw new Error("The parameter 'email' must be defined.");
+      throw new Error("The parameter 'email' must be defined.");
     if (profilesId === undefined || profilesId === null)
-        throw new Error("The parameter 'profilesId' must be defined.");
+      throw new Error("The parameter 'profilesId' must be defined.");
 
     const content_ = { "email": email, "profilesId": profilesId };
 

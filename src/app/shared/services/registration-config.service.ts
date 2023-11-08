@@ -8,10 +8,10 @@ import { Injectable } from '@angular/core';
 export class RegistrationConfigService {
     constructor(private http: HttpClient) { }
     /**
-             * Get RegistrationConfig by ID
-             * @id registration config id
-             * @return SUCCESS
-             */
+    * Get RegistrationConfig by ID
+    * @id registration config id
+    * @return SUCCESS
+    */
     getRegistrationConfigById(id: string) {
         let url_ = environment.registrationsConfigBaseUrl + "/{id}";
         if (id === undefined || id === null)

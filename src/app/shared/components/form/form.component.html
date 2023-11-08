@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <formly-form [form]="form" [model]="models" [fields]="fields"></formly-form>
+            <button class="btn btn-primary" type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
