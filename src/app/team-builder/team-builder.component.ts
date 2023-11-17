@@ -47,7 +47,7 @@ export class TeamBuilderComponent implements OnInit {
           // TODO: Need to check if we getting the token from url parameter then captain would be logged in automatically.
           if (type === 'captain') {
             // Logics for the captain login goes here
-            this.authService.setRedirectParams(this.router.url, { type: registrationConfig.type, loginType: type });
+            this.authService.setRedirectParams(this.router.url, { type: registrationConfig.type, loginType: type,regConfigId: this.regConfigId });
             this.router.navigate(['login']);
           } else {
             this.checkUser(type)
