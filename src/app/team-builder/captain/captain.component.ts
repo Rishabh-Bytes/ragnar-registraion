@@ -140,7 +140,8 @@ export class CaptainComponent implements OnInit, OnChanges {
           this.error = 'IS_CAPTAIN_ALREADY';
         }
 
-        console.log('tetststsad', this.stateService.getState('IRegistrationCaptainState'))
+        this.state = this.stateService.getState('IRegistrationCaptainState')
+        // console.log('tetststsad', this.stateService.getState('IRegistrationCaptainState'))
 
         // Add handling for other API responses as needed
       },
@@ -181,6 +182,7 @@ export class CaptainComponent implements OnInit, OnChanges {
         _.get(result, 'funnel.waiver[1]', null)]);
 
       return this.CustomFieldDataService.getCustomFieldsGroupByIds(forms).then((data: any) => {
+        debugger
         result.funnel.form = _.find(data, (f) => f.type === CustomFieldsGroupType.Form);
         result.funnel.confirmation = [_.find(data, (f) => f.type === CustomFieldsGroupType.Confirmation)];
         result.funnel.waiver[0] = _.find(data, (f) => f.type === CustomFieldsGroupType.Waiver && !f.appliesToMinors);
