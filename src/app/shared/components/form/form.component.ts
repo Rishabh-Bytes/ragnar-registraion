@@ -45,6 +45,30 @@ export class FormComponent {
         label: 'Phone',
         placeholder: 'Enter Phone number',
         required: true,
+      },   
+    }, {
+      key: ' Select Team Type',
+      type: 'radio',
+      templateOptions: {
+        type: 'radio',
+        label: 'Select Team Type',
+        name: 'teamtype',
+        required: true,
+        options: [
+          { value: 'testOne', label: 'one' }, 
+          { value: 'testTwo', label: 'two' }
+        ]
+      }
+    }, {
+      key: 'selectedItem',
+      type: 'select',
+      defaultValue: '--Select--',
+      templateOptions: {
+        label: 'Selection Box',
+        options: [
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' },
+        ],
       },
     },
   ...this.fields]
@@ -91,5 +115,4 @@ export class FormComponent {
       
     }
   }
-
 }

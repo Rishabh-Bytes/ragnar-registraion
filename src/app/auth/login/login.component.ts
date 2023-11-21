@@ -67,8 +67,10 @@ export class LoginComponent implements OnInit {
         // let params = this.AuthService.getRedirectParams();
         localStorage.setItem('jwtToken-user', user.jwtToken);
         this.authService.setUser(user);
-        const redirectUrl = 'team-builder/'+this.eventId + '/registration/' +  this.loginType
-        this.router.navigate([redirectUrl]);
+        const redirectUrl = 'team-builder/'+this.eventId + '/registration/' +  this.loginType 
+        
+            this.router.navigate([redirectUrl]);
+          
       },
       error: (error) => {
         console.log('error', error);

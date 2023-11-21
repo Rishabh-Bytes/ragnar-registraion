@@ -9,20 +9,19 @@ import { IRedirectParams } from '../helper/interface';
 })
 export class AuthService {
   apiUrl = environment.profilesBaseUrl;
-  private user: User
   private redirectParams: IRedirectParams
   constructor(private http: HttpClient) {
 
-    let user = sessionStorage.getItem('user'),
-      redirectParams = sessionStorage.getItem('redirect-params');
+    // ,
+    //   ;
 
-    if (user) {
-      this.user = JSON.parse(user);
-    }
+    // if (user) {
+    //   this.user = JSON.parse(user);
+    // }
 
-    if (redirectParams) {
-      this.redirectParams = JSON.parse(redirectParams);
-    }
+    // if (redirectParams) {
+    //   this.redirectParams = JSON.parse(redirectParams);
+    // }
   }
 
   login(loginDetails: any, userType: string) {
@@ -37,8 +36,9 @@ export class AuthService {
     sessionStorage.setItem('user', JSON.stringify(user));
   }
 
-  getUser(): User {
-    return this.user;
+  getUser() {
+    let user:any = sessionStorage.getItem('user');
+    return JSON.parse(user);
   }
 
   setRedirectParams(stateName: string, params: Object = {}): void {
@@ -48,6 +48,11 @@ export class AuthService {
     };
 
     sessionStorage.setItem('redirect-params', JSON.stringify(this.redirectParams));
+  }
+
+  getRedirectParams() {
+    let redirectParams:any = sessionStorage.getItem('redirect-params')
+    return JSON.parse(redirectParams);
   }
 
   createUser(user: User) {

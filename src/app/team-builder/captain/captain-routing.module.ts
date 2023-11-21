@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CaptainComponent } from './captain.component';
 import { InfoComponent } from './info/info.component';
+import { AuthGuard } from 'src/app/auth/gaurd/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,9 +10,8 @@ const routes: Routes = [
     component: CaptainComponent,
     children: [{
       path: 'info',
-      component: InfoComponent,
-      // canActivate:[AuthGuard]
-    },
+      component: InfoComponent
+        },
     { path: '', redirectTo: 'info', pathMatch: 'full' },
     ]
   },

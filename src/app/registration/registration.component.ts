@@ -32,11 +32,10 @@ export class RegistrationComponent implements OnInit {
             regConfigId: this.eventId
           }
         };
-        sessionStorage.setItem('redirect-params ', JSON.stringify(redirectParams));
+        sessionStorage.setItem('redirect-params', JSON.stringify(redirectParams));
       })
     }
-
-
+    
     const jwtToken = localStorage.getItem('jwtToken-user');
 
     if (!jwtToken) {
