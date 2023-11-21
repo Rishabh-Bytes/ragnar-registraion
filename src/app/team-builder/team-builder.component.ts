@@ -29,7 +29,7 @@ export class TeamBuilderComponent implements OnInit {
     private stateService: StateService,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
   async ngOnInit() {
     this.regConfigId = this.route.snapshot.params['eventId'];
 
@@ -48,6 +48,7 @@ export class TeamBuilderComponent implements OnInit {
               this.regConfigId
             ).then(
               (registrationConfig: any) => {
+                debugger
                 const url = this.router.url.split('?')[0];
                 console.log('before ? ', url);
                 this.authService.setRedirectParams(url, {
@@ -65,9 +66,12 @@ export class TeamBuilderComponent implements OnInit {
 
                 if (
                   this.authService.getRedirectParams().stateName ===
-                  '/team-builder/ruH256_K-/registration/captain/info'
+                  url
                 ) {
-                  this.router.navigate(['captain']);
+                  this.router.navigateByUrl('/', { skipLocationChange: false }).then(() => {
+                    this.router.navigate([this.authService.getRedirectParams().stateName]);
+                  });
+                  // this.router.navigate([this.authService.getRedirectParams().stateName]);
                 } else {
                 }
               },
@@ -95,40 +99,6 @@ export class TeamBuilderComponent implements OnInit {
         break;
     }
   }
-
-  //   $onInit() {
-  //     let captain = this.$stateParams.captain;
-  //     console.log("🚀  file: registration.component.ts:18  Controller  $onInit  captain:", captain)
-  //     // this.GoogleAnalytics.sendingPageInitToGoogleAnalytics('registration',this.user ? this.user.email : "", 'registration');
-  //     / Note: Captain automate Login Code /
-  //     if (captain) {
-  //         captain = decodeURIComponent(this.$stateParams.captain)
-  //         console.log("🚀  file: registration.component.ts:23  Controller  $onInit  captain:", captain)
-  //         if (!_.isError(_.attempt(JSON.parse, atob(captain)))) {
-  //             this.RegistrationConfigDataService.getRegistrationConfigById(this.$stateParams.regConfigId).then((registrationConfig: Data.RegistrationConfig) => {
-  //                 this.AuthService.setRedirectParams(this.$state.current.name, { "type": registrationConfig.type });
-
-  //                 captain = JSON.parse(atob(captain));
-  //                 localStorage.setItem('jwtToken-user', captain.jwtToken);
-  //                 delete captain.jwtToken;
-  //                 this.AuthService.setUser(captain);
-  //                 delete this.$stateParams.captain;
-  //                 if (this.$state.current.name === 'team-builder.registration.captain.info') {
-  //                     this.$state.transitionTo('team-builder.registration.captain.info', this.$stateParams, { reload: true, inherit: false, notify: true });
-  //                 } else {
-  //                     this.$state.transitionTo('team-builder.registration.volunteer.info', this.$stateParams, { reload: true, inherit: false, notify: true });
-  //                 }
-  //             }, () => {
-  //                 this.checkUser();
-  //             });
-  //         } else {
-  //             this.checkUser();
-  //         }
-  //         / Note: Captain automate Login Code /
-  //     } else {
-  //         this.checkUser();
-  //     }
-  // }
 
   checkUser(type: string) {
     this.user = this.authService.getUser();

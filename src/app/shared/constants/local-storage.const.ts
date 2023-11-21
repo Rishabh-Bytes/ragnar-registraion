@@ -1,5 +1,7 @@
 export const LOCAL_STORAGE_CONST = {
-  JWT_TOKEN: 'JWT_TOKEN',
+  // JWT_TOKEN: 'JWT_TOKEN',
+  JWT_TOKEN: 'jwtToken-user',
+
 };
 
 export const localStorageConstant = {

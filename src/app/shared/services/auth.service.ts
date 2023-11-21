@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   getUser() {
-    let user:any = sessionStorage.getItem('user');
+    let user: any = sessionStorage.getItem('user');
     return JSON.parse(user);
   }
 
@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   getRedirectParams() {
-    let redirectParams:any = sessionStorage.getItem('redirect-params')
+    let redirectParams: any = sessionStorage.getItem('redirect-params')
     return JSON.parse(redirectParams);
   }
 
@@ -81,5 +81,13 @@ export class AuthService {
     const content_ = { "email": email, "profilesId": profilesId };
 
     return this.http.put(url_, content_).toPromise();
+  }
+
+  logout(): void {
+
+  }
+
+  getVipCode() {
+    return null;
   }
 }

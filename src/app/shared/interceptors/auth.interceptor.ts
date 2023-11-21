@@ -43,7 +43,6 @@ export class AuthInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
-        debugger
         console.error(error);
         if (error.status == 401) {
           localStorage.clear();
