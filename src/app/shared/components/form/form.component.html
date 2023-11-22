@@ -1,10 +1,63 @@
-<div class="row">
+<form #form="ngForm">
+  <div class="row">
     <div class="col-md-4 mb-4">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <formly-form [form]="form" [model]="models" [fields]="fields"></formly-form>
-            <button class="btn btn-primary" type="submit">
-                Submit
-            </button>
-        </form>
+      <!-- <form [formGroup]="form" > -->
+      <!-- <formly-form [form]="form" [model]="models" [fields]="fields"></formly-form> -->
+      <!-- </form> -->
+      <h3>Contact Info</h3>
+
+      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input name="firstName" [(ngModel)]="members.firstName" [required]="true" (focus)="formElementEnter(members)"
+            (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
+        </mat-form-field>
+        <div
+          *ngIf="(form.form.controls['firstName'] && form.form.controls['firstName'].errors && form.form.controls['firstName'].touched)"
+          class="invalid-feedback">
+          <mat-error *ngIf="form.form.controls['firstName'].errors['required']">
+            {{'First Name is required'}}
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input name="lastName" [(ngModel)]="members.lastName" [required]="true" (focus)="formElementEnter(members)"
+            (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
+        </mat-form-field>
+        <div
+          *ngIf="(form.form.controls['lastName'] && form.form.controls['lastName'].errors && form.form.controls['lastName'].touched)"
+          class="invalid-feedback">
+          <mat-error *ngIf="form.form.controls['lastName'].errors['required']">
+            {{'Last Name is required'}}
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input name="email" [(ngModel)]="members.email" [required]="true" (focus)="formElementEnter(members)"
+            (blur)="formElementExit(members)" [pattern]="emailRegex" matInput placeholder="Event First Name" type="text" [disabled]="true"/>
+        </mat-form-field>
+      </div>
+   
+      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
+        <mat-form-field>
+          <mat-label>Phone</mat-label>
+          <input name="phone" [(ngModel)]="members.phone" [required]="true" (focus)="formElementEnter(members)"
+            (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
+        </mat-form-field>
+        <div
+          *ngIf="(form.form.controls['phone'] && form.form.controls['phone'].errors && form.form.controls['phone'].touched)"
+          class="invalid-feedback">
+          <mat-error *ngIf="form.form.controls['phone'].errors['required']">
+            {{'Last Name is required'}}
+          </mat-error>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+</form>

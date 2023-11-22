@@ -5,10 +5,17 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { ComponentsComponent } from './components/components.component';
 import { FormComponent } from './components/form/form.component';
 import { StepperComponent } from './components/stepper/stepper.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormlyModule } from '@ngx-formly/core';
-import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -20,8 +27,18 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
-    FormlyModule.forRoot({}),
-    FormlyBootstrapModule
+    FormsModule,
+    MatSlideToggleModule,
+    MatTabsModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    FormsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatDatepickerModule
   ],
   exports: [
     FormComponent

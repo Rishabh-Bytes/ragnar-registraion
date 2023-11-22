@@ -175,6 +175,7 @@ export class CaptainComponent implements OnInit, OnChanges {
 
   getRegistrationConfig(regConfigId: string) {
     return this.RegistrationConfigDataService.getRegistrationConfigById(regConfigId).then((result: any) => {
+      debugger
       const forms = _.compact([
         _.get(result, 'funnel.form', null),
         _.get(result, 'funnel.confirmation', null),

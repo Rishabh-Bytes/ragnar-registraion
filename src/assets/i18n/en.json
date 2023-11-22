@@ -1,0 +1,480 @@
+{
+  "common": {
+    "email": "Email",
+    "password": "Password",
+    "new-password": "New Password",
+    "confirm-password": "Confirm Password",
+    "password-error-message": "must have at least 8 characters and uppercase letters, lowercase letters and numbers.",
+    "confirm-password-same": "Please enter confirm password same as new password",
+    "required": "is required",
+    "invalid-password": "must have at least 8 characters and uppercase letters, lowercase letters and numbers."
+  },
+  "header": {
+    "dashboard": "Dashboard",
+    "events": "Events",
+    "registrations": "Registrations",
+    "reports": "Reports",
+    "promocode": "Promo Codes",
+    "users": "Users",
+    "audit-log": "Audit Log",
+    "runner": "Runners"
+  },
+  "login": {
+    "login-label": "Log In",
+    "forgot-password": "Forgot Password?",
+    "new-password": "New Password",
+    "change-password-label": "Change Password",
+    "errors": {
+      "account-not-exists": "That account doesn't exist. Please try again or contact an administrator.",
+      "invalid-password": "Sorry, that password isn't correct. Need to reset your password?."
+    }
+  },
+  "forgot-password": {
+    "confirmation-code-btn": "Get Confirmation Code",
+    "i-have-confirmation-code": "I have a Confirmation Code",
+    "confirmation-code-label": "Confirmation Code"
+  },
+
+"users": {
+    "labels": {
+        "name": "Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "password": "Password",
+        "new-password": "New Password",
+        "confirm-password": "Confirm password",
+        "confirm-password-same": "Please enter confirm password same as new password",
+        "confirmation-code": "Confirmation Code",
+        "roles": "Roles",
+        "delete-dialog-title": "Wait!",
+        "delete-dialog-body": "Are you sure you want to delete the user?"
+    }
+},
+
+  "runner": {
+    "labels": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "gender": "Gender",
+      "change-password": "Change Password",
+      "date-of-birth": "Date Of Birth", 
+      "shirt-size": "Shirt Size",
+      "phone": "Phone",
+      "address": "Address",
+      "active-events": "Active Events",
+      "past-events": "Past Events",
+      "pace": "10k Pace"
+    },
+    "address": {
+      "address": "Address",
+      "address2": "Address 2",
+      "city": "City",
+      "state": "State",
+      "country": "Country",
+      "zipCode": "Zipcode",
+      "validzip": "Please enter a validzip"
+    },
+    "event": {
+      "name": "Name",
+      "type": "Type",
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    }
+  },
+
+  "events": {
+    "list": {
+      "filters": {
+        "allyear": "All",
+        "all": "All Events",
+        "past": "Registration Closed",
+        "upcoming": "Registration Not Open",
+        "ongoing": "Registration Open"
+      },
+      "buttons": {
+        "create-event": "Create New"
+      },
+      "labels": {
+        "create": "Create New Event",
+        "next": "Next",
+        "previous": "Previous",
+        "finish": "Finish",
+        "delete-dialog-title": "Wait!",
+        "delete-dialog-body": "Are you sure you want to delete the {{name}} event?"
+      }
+    },
+    "detail": {
+      "labels": {
+        "is-live": "Live"
+      },
+      "placeholders": {
+        "event-name": "Event Name"
+      },
+      "basic": {
+        "tabs": {
+          "details": "Details",
+          "info": "Info",
+          "dates": "Dates"
+        },
+        "labels": {
+          "event-name": "Event name",
+          "type": "Type",
+          "course-capacity": "Course Capacity",
+          "team-goal": "Sell to Cap",
+          "start-date": "Start Date",
+          "blackloop-team-goal": "Blackloop Sell to Cap",
+          "end-date": "End Date",
+          "glampingCap": "Glamping Sell to Cap",
+          "glampingPrice": "Glamping Price",
+          "isGlamping": "Glamping price",
+          "timezone": "Timezone",
+          "online-fee-date": "Online Runner Invite Date",
+          "late-fee-1-amount": "Late Invite Fee Amount",
+          "late-fee-2-amount": "Late Invite Fee Amount",
+          "late-fee-1-date": "Late Invite Fee Start",
+          "late-fee-2-date": "Late Invite Fee Start",
+          "team-name-change-date": "TEAM NAME/SHIRT/PACE DEADLINE",
+          "team-freeze-date": "ROSTER FREEZE DEADLINE",
+          "race": "Race",
+          "race-year": "Race Year"
+        },
+        "errors": {
+          "less-than-end-date": "Less than End Date"
+        }
+      },
+      "pricing": {
+        "tabs": {
+          "pricing": "Pricing",
+          "prices": "Set Prices",
+          "promo-codes": "Promo Codes",
+          "taxes": "Fees"
+        },
+        "labels": {
+          "currency": "Currency:",
+          "promo-code": "Promo Code",
+          "discount": "Discount",
+          "usage": "Usage",
+          "reg-periods": "REG PERIODS",
+          "team-types": "TEAM TYPES",
+          "start-date": "Start Date",
+          "end-date": "End Date",
+          "description": "DESCRIPTION",
+          "chargeFee": "Don't charge transaction fee",
+          "isGlamping": "Glamping applicable",
+          "isGlampingApply": "Add Glamping",
+          "glamping": "Glamping",
+          "datePurchased": "Date Purchased:",
+          "customRequired": "Make this Field Required",
+          "taxes": "Taxes",
+          "enabled": "Add Taxes to Price",
+          "taxName": "Tax Name",
+          "percentage": "Percentage",
+          "transactionFee": "Transaction Fee",
+          "registration-open": "Registration Open",
+          "registration-close": "Registration Close",
+          "delete-promo-code-dialog-title": "Wait!",
+          "delete-promo-code-dialog-body": "Are you sure you want to delete the promo code?"
+        }
+      },
+      "teams": {
+        "tabs": {
+          "teams": "Teams",
+          "configuration": "Configuration",
+          "teamData": "Team Data",
+          "manageTeams": "Manage Teams",
+          "manageRunners": "Manage Runners",
+          "startTimes": "Start Times"
+        },
+        "labels": {
+          "teamId": "Team ID",
+          "teamNumber": "Team #",
+          "teamName": "Team Name",
+          "groupName": "Group Name",
+          "jobName": "Job Name",
+          "teamType": "Team Type",
+          "startTime": "Start Time",
+          "volunteers": "Volunteers",
+          "members": "Members",
+          "classification": "CLASSIFICATION",
+          "division": "DIVISION",
+          "teamPace": "Team Pace",
+          "teamMembers": "Team Members",
+          "teamVolunteers": "Volunteers",
+          "teamInvites": "Invitees",
+          "memberName": "Name",
+          "memberFirstName": "First Name",
+          "memberLastName": "Last Name",
+          "birthDate": "Birthdate",
+          "memberEmail": "Email",
+          "changePasswordEmail": "Email will be sent to:",
+          "memberRole": "ROLE",
+          "captainRole": "Role (Manual waiver must be sent to user)",
+          "memberPace": "Pace",
+          "memberOrder": "Order",
+          "memberCreateDate": "Register Date",
+          "memberJob": "Job",
+          "memberShift": "Shift",
+          "memberExtraFees": "Extra Fees",
+          "preview": "Preview",
+          "copyInviteUrl": "Copy Team Invite URL",
+          "membersCount": "Total Runners",
+          "glampingCount": "Glamp Sites",
+          "teamsCount": "Team Count",
+          "availableStartTimes": "Available Start Times",
+          "unAssignedTeams": "Unassigned Teams",
+          "eventsWithStartTimes": "Assigned Teams",
+          "assignStartTimes1": "Assign",
+          "assignStartTimes2": "Start Times",
+          "assignStartTimes3": "Unassign",
+          "paid-exemptions": "Paid Exemptions:",
+          "manual-exemptions": "Manual Exemptions:",
+          "create-new-MEMBER": "Create New Member",
+          "create-new-CAPTAIN": "Create New Captain",
+          "create-new-VOLUNTEER": "Create New Volunteer",
+          "choose-captain": "Select New Captain",
+          "add-team": "Add Team",
+          "team-members": "Team Members",
+          "select-job": "Select a Job",
+          "divisions": {
+            "title": "Divisions",
+            "name": "Division Name"
+          },
+          "classifications": {
+            "title": "Classifications",
+            "name": "Classification Name"
+          },
+          "delete-group-dialog-title": "Wait!",
+          "delete-group-dialog-body": "Are you sure you want to un-pair these teams? All pair information will be lost",
+          "memberAddress": "Address1",
+          "memberAddress1": "Address2",
+          "memberCity": "City",
+          "memberState": "STATE",
+          "memberCountry": "COUNTRY",
+          "memberZipcode": "Zipcode",
+          "memberPhone": "Phone number",
+          "memberShirtSize": "Shirt size",
+          "memberZipcodeValidError": "Please enter a valid zip",
+          "memberCityValidError": "Please enter a valid city",
+          "memberPhoneValidError": "Please enter 10 digit valid phone number"
+        },
+        "buttons": {
+          "add-new-member": "Add New Member",
+          "add-new-volunteer": "Add New Volunteer",
+          "notes": "Notes"
+        },
+        "errors": {
+          "runners-max": "Maximum number of runners exceeded",
+          "volunteers-max": "Maximum number of volunteers exceeded",
+          "captain-required": "A Team Captain is required"
+        }
+      },
+      "registration-funnel": {
+        "tabs": {
+          "registration-funnel": "Registration Funnel"
+        },
+        "titles": {
+          "add-ons": "Add ons & Upgrades",
+          "confirmation": "Confirmation",
+          "waiver": "Waiver"
+        },
+        "labels": {
+          "change-form": "Change",
+          "choose-form": "Choose",
+          "add-form": "Add",
+          "select-form": "Select a Form",
+          "select-confirmation": "Select a Confirmation",
+          "select-waiver": "Select a Waiver",
+          "select-minor-waiver": "Select a Minor Waiver",
+          "group-volunteer-minor-url": "Group Volunteer Minor Url"
+        },
+        "errors": {
+          "invalid-url": "please enter valid url"
+        }
+      },
+      "volunteers": {
+        "tabs": {
+            "volunteers": "Volunteers",
+            "registration-funnel": "Registration Funnel",
+            "requirements": "Team Requirements",
+            "jobs": "Jobs",
+            "groups": "Groups"
+        },
+        "labels": {
+            "name":"Name",
+            "teamName":"Team Name",
+            "email":"Email",
+            "jobTitle":"Job Title",
+            "shift-date-and-time":"Shift Date & Time",
+            "shiftEnd":"Shift End",
+            "groupShifts":"Assigned Shifts",
+            "group":"GROUP",
+            "team":"TEAM",
+            "both":"BOTH",
+            "groupName": "Group",
+            "groupManager": "Group Leader",
+            "groupLeaderEmail":"Group Leader Email",
+            "group-name":"Group Name",
+            "leader-first-name":"Leader's First Name",
+            "leader-last-name":"Leader's Last Name",
+            "leader-email-address":"Leader's Email Address",
+            "select-job":"Select Job",
+            "select-shift":"Select Shift",
+            "capacity":"Capacity",
+            "jobName": "Jobs",
+            "jobLocation": "Job Location",
+            "state": "State",
+            "locationName": "Location Name",
+            "zip": "Zip",
+            "address": "Address",
+            "long": "Long",
+            "lat": "Lat",
+            "city": "City",
+            "priority": "Priority",
+            "shiftType":"Shift Type",
+            "startDate": "Shift Start Date",
+            "endDate": "Shift End Date",
+            "jobDescription": "Job Description",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "filled": "Filled",
+            "private": "Private",
+            "filled-Total": "Filled / Total",
+            "teamFilled":"Team Filled",
+            "groupFilled":"Group Filled",
+            "password": "Password",
+            "groupURL": "Group URL",
+            "managerEmail": "Manager Email",
+            "VIP": "VIP",
+            "early": "Early",
+            "regular": "Regular",
+            "lastChance": "Last Chance",
+            "volunteersShiftOpen": "Volunteers Shift Open",
+            "volunteersShiftClose": "Volunteers Shift Close",
+            "payforVolunteersDeadline": "Pay for Volunteers Deadline",
+            "useExchangeAddress": "Use Exchange Address",
+            "selectExchangeAddress": "Select Exchange Address",
+            "teamCapacityFilled": "Team Filled /Capacity",
+            "groupCapacityFilled": "Group Filled /Capacity"
+        }
+    }
+    }
+    
+  },
+  "global": {
+    "is-required": "is required.",
+    "is-too-long": "is too long.",
+    "password-error-message": "must have at least 8 characters and uppercase letters, lowercase letters and numbers.",
+    "is-invalid": "is invalid.",
+    "is-less-than-end-date": "is less than End Date.",
+    "amex-is-not-supported1": "Ragnar does not accept American Express.",
+    "amex-is-not-supported2": "Please try again with Visa, Mastercard or Discover",
+    "days-ago": {
+        "0" : "Today",
+        "1" : "Yesterday",
+        "2-or-more": "{{ days }} Days Ago"
+    },
+    "timezones": {
+        "UTC": "(GMT +00:00) UTC",
+        "HAST": "(GMT -10:00) HAST",
+        "HADT": "(GMT -09:00) HADT",
+        "AKDT": "(GMT -08:00) AKDT",
+        "PDT": "(GMT -07:00) PDT",
+        "MST": "(GMT -07:00) MST",
+        "MDT": "(GMT -06:00) MDT",
+        "CDT": "(GMT -05:00) CDT",
+        "EDT": "(GMT -04:00) EDT",
+        "CST": "(GMT -06:00) CST",
+        "EST": "(GMT -05:00) EST",
+        "AST": "(GMT -04:00) AST",
+        "ADT": "(GMT -02:00) ADT",
+        "NDT": "(GMT -02:30) NDT"
+    },
+    "event-types": {
+        "ROAD": "Road",
+        "TRAIL": "Trail",
+        "SPRINT" : "Sprint",
+        "SUNSET" : "Sunset",
+        "TRAIL_SPRINT": "TrailSprint"
+    },
+    "user-event-types" : {
+        "ROAD": "Relay",
+        "TRAIL": "Trail",
+        "SPRINT" : "Sprint",
+        "SUNSET" : "Sunset",
+        "TRACK" : "Track",
+        "TRAIL_SPRINT": "TrailSprint"
+    },
+    "categories": {
+        "REGULAR": "Standard",
+        "ULTRA": "Ultra",
+        "HIGH_SCHOOL": "High School",
+        "SIX_PACK": "Half",
+        "BLACK_LOOP": "Black Loop",
+        "GLAMPING":"Glamping"
+    },
+    "member-roles": {
+        "CAPTAIN": "Captain",
+        "MEMBER": "Member",
+        "VOLUNTEER": "Volunteer"
+    },
+    "registration-types": {
+        "VIP": "VIP",
+        "EARLY": "Early",
+        "REGULAR": "Regular",
+        "LAST_CHANCE": "Last Chance",
+        "NOT OPEN YET": "Not Open Yet",
+        "NOT SET": "Not Set",
+        "CLOSED": "closed",
+        "OPEN": "open",
+        "START": "Start"
+    },
+    "user-roles": {
+        "FINANCE": "Finance",
+        "ADMIN": "Admin",
+        "RACE_DIRECTOR": "Race Director",
+        "VOLUNTEER_MANAGER": "Volunteer Manager",
+        "MARKETING": "Marketing",
+        "CUSTOMER_SERVICE": "Customer Service",
+        "PROMO_CODE_MANAGER": "Promo Code Manager",
+        "MDM": "MDM",
+        "FIELD_OPS": "Field Ops"
+    },
+    "errors": {
+        "required": "Required",
+        "valid": "Invalid",
+        "too-long": "Too long",
+        "duplicated": "Duplicates are not allow",
+        "blackloop-capacity" : "We’re sorry, Black Loop for this event has sold out. Please select a different team type."
+    },
+    "buttons": {
+        "add-group":"Add Group",
+        "add-shift":"Add Shift",
+        "add-job":"Add Job",
+        "save": "Save",
+        "delete": "Delete",
+        "add-new": "Add New",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "copy": "Copy",
+        "change-password": "Change Password"
+    },
+    "labels": {
+        "no": "No",
+        "yes": "Yes",
+        "am": "AM",
+        "pm": "PM",
+        "from": "From",
+        "to": "To",
+        "all": "All"
+    },
+    "placeholders": {
+        "search": "Search ...",
+        "searchBy": "Search by: "
+    },
+    "confirm": {
+        "ok": "Let\"s do it!",
+        "cancel": "No, I\"m scared"
+    }
+}
+}

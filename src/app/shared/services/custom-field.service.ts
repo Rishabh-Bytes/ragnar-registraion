@@ -3,6 +3,7 @@ import { BaseDataService } from "./base.service";
 import { Injectable } from "@angular/core";
 import { RequestService } from "./request.service";
 import * as _ from 'lodash';
+import { HttpClient } from "@angular/common/http";
 
 
 const APPLIES_TO_MINORS = 'APPLIES_TO_MINORS';
@@ -263,21 +264,24 @@ export interface IOption {
 })
 export class CustomFieldDataService extends BaseDataService {
     /* @ngInject */
-    constructor(private RequestService: RequestService) {
+    constructor(private RequestService: RequestService, private http: HttpClient) {
         super();
     }
 
 
     getCustomFieldsGroupByIds(groupIds: string[]) {
-        let request = {
-            url: environment.customFieldsBaseUrl + '/groups/ids',
-            data: { ids: groupIds }
-        };
+        // let request = {
+        //     url: environment.customFieldsBaseUrl + '/groups/ids',
+        //     data: { ids: groupIds }
+        // };
 
+     let url = environment.customFieldsBaseUrl + '/groups/ids';
 
-
-
-        return this.RequestService.post(request);
+     let data = {
+        'ids': groupIds
+     }
+     return this.http.post(url, data).toPromise();
+        // return this.RequestService.post(request);
 
 
 

@@ -32,6 +32,29 @@ export class InfoComponent implements OnInit{
     this.state = this.stateService.getState('IRegistrationCaptainState');
     console.log("🚀 ~ file: info.component.ts:33 ~ InfoComponent ~ ngOnInit ~  this.state:",  this.state)
     this.member = this.state.captain;
-    console.log("🚀 ~ file: info.component.ts:35 ~ InfoComponent ~ ngOnInit ~  this.member:",  this.member)
+    // console.log("🚀 ~ file: info.component.ts:35 ~ InfoComponent ~ ngOnInit ~  this.member:",  this.state.registrationConfig.funnel.form.customFields)
+
+
+    // if (this.state.registrationConfig.funnel?.form.customFields.length > 0) {
+    //   this.state.registrationConfig.funnel?.form.customFields.forEach((element:any) => {
+    //     switch (element.fieldStyle){
+    //       case "select":
+    //         this.captainFields.push(
+    //           {
+    //             key: 'selectedItem',
+    //             type: 'select',
+    //             defaultValue: '--Select--',
+    //             templateOptions: {
+    //               label: element.fieldLabel,
+    //               options: [
+    //                 { label: 'Yes', value: 'yes' },
+    //                 { label: 'No', value: 'no' },
+    //               ],
+    //             },
+    //           },
+    //         )
+    //     }
+    //   });
+    // }
   }
 }

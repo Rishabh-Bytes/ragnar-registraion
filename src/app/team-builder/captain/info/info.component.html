@@ -1,2 +1,10 @@
-<p>captain info component</p>
-<app-form [fields]="captainFields"></app-form>
+<app-form [members]="member" [state]="state"></app-form>
+
+<div *ngFor="let customField of state.registrationConfig.funnel?.form.customFields">
+
+    <div class="md-input label md-label" style="text-transform: capitalize; height: inherit;">{{
+        customField.fieldLabel | lowercase }} <span ng-if="customField.fieldRequired"
+            class="required">*</span> </div>
+
+            <input *ngIf="customField.fieldStyle == 'text'" name="{{customField.name }}" [(ngModel)]="customField.answer" [required]="customField.fieldRequired"> 
+</div>

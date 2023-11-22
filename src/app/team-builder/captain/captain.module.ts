@@ -4,6 +4,7 @@ import { InfoComponent } from './info/info.component';
 import { CaptainRoutingModule } from './captain-routing.module';
 import { CaptainComponent } from './captain.component';
 import { SharedModule } from '../../shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,9 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     CaptainRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class CaptainModule { }

@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { Registration } from '../../services/registration-config.service';
+import { IRegistrationCaptainState } from '../../helper/interface';
+import { GoogleAnalytics } from '../../services/google-analytics.service';
 
 @Component({
   selector: 'app-form',
@@ -8,111 +11,58 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent {
-  
-  form = new FormGroup({});
-  models = {};
-  @Input() fields: FormlyFieldConfig[] = [];
+  @Input() members:Registration;
+  @Input() state: IRegistrationCaptainState
+  inputFocusCount = 0;
+  emailRegex: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+  constructor(private GoogleAnalytics: GoogleAnalytics
+    ) {
 
+  }
   ngOnInit() {
-    this.fields = [{
-      key: 'first_name',
-      type: 'input',
-      props: {
-        label: 'First Name',
-        placeholder: 'Enter First Name',
-        required: true,
-      },
-    }, {
-      key: 'last_name',
-      type: 'input',
-      props: {
-        label: 'Last Name',
-        placeholder: 'Enter last Name',
-        required: true,
-      },
-    }, {
-      key: 'email',
-      type: 'input',
-      props: {
-        label: 'Email',
-        placeholder: 'Enter email',
-        required: true,
-      },
-    }, {
-      key: 'phone',
-      type: 'input',
-      props: {
-        label: 'Phone',
-        placeholder: 'Enter Phone number',
-        required: true,
-      },   
-    }, {
-      key: ' Select Team Type',
-      type: 'radio',
-      templateOptions: {
-        type: 'radio',
-        label: 'Select Team Type',
-        name: 'teamtype',
-        required: true,
-        options: [
-          { value: 'testOne', label: 'one' }, 
-          { value: 'testTwo', label: 'two' }
-        ]
-      }
-    }, {
-      key: 'selectedItem',
-      type: 'select',
-      defaultValue: '--Select--',
-      templateOptions: {
-        label: 'Selection Box',
-        options: [
-          { label: 'Yes', value: 'yes' },
-          { label: 'No', value: 'no' },
-        ],
-      },
-    },
-  ...this.fields]
+    console.log("🚀 ~ file: form.component.ts:19 ~ FormComponent ~ ngOnInit ~ this.members:", this.members)
   }
-  // fields: FormlyFieldConfig[] =[
-  //   {
-  //     key: 'first_name',
-  //     type: 'input',
-  //     props: {
-  //       label: 'First Name',
-  //       placeholder: 'Enter First Name',
-  //       required: true,
-  //     },
-  //   }, {
-  //     key: 'last_name',
-  //     type: 'input',
-  //     props: {
-  //       label: 'Last Name',
-  //       placeholder: 'Enter last Name',
-  //       required: true,
-  //     },
-  //   }, {
-  //     key: 'email',
-  //     type: 'input',
-  //     props: {
-  //       label: 'Email',
-  //       placeholder: 'Enter email',
-  //       required: true,
-  //     },
-  //   }, {
-  //     key: 'phone',
-  //     type: 'input',
-  //     props: {
-  //       label: 'Phone',
-  //       placeholder: 'Enter Phone number',
-  //       required: true,
-  //     },
-  //   },
-  // ]
 
-  onSubmit() {
-    if (this.form.valid) {
-      console.log(this.models);
-      
+  formElementEnter(form:any) {
+    this.inputFocusCount++;
+    if (this.inputFocusCount === 1) {
+        this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('FORM_ELEMENT_ENTER', {
+            formName: 'team_builder_registration_form',
+            firtName: form.firstName,
+            lastName: form.lastName,
+            dateOfBirth: form.bornAt,
+            email: form.email,
+            phone: form.phone,
+            gender: form.gender,
+            tShirtSize: form.tShirtSize,
+            country: form.country,
+            state: form.state,
+            city: form.city,
+            addressLine1: form.address,
+            addressLine2: form.address2,
+            zipCode: form.zipCode,
+        })
     }
-  }
+}
+
+formElementExit(form:any) {
+    this.inputFocusCount = 0;
+    this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('FORM_ELEMENT_EXIT', {
+        formName: 'team_builder_registration_form',
+        firtName: form.firstName,
+        lastName: form.lastName,
+        dateOfBirth: form.bornAt,
+        email: form.email,
+        phone: form.phone,
+        gender: form.gender,
+        tShirtSize: form.tShirtSize,
+        country: form.country,
+        state: form.state,
+        city: form.city,
+        addressLine1: form.address,
+        addressLine2: form.address2,
+        zipCode: form.zipCode,
+    })
+}
+
 }
