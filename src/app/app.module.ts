@@ -12,6 +12,8 @@ import { TeamClassificationDataService } from './shared/services/classification.
 import { PopUpService } from './shared/services/pop-up.service';
 import { CustomFieldDataService } from './shared/services/custom-field.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DefaultPaceService } from './shared/services/defaultpace.service';
+import { CategoryService } from './shared/services/category.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +37,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RequestService,
     TeamClassificationDataService,
     PopUpService,
-    CustomFieldDataService
+    CustomFieldDataService,
+    DefaultPaceService,
+    CategoryService
   ],
   bootstrap: [AppComponent],
 })

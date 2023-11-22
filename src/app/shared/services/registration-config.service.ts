@@ -84,7 +84,96 @@ export class RegistrationConfigService {
 
     }
 
+    /**
+        * Calculate price
+        * @regConfId registration config id
+        * @body time data
+        * @return SUCCESS
+        */
+    postOrderPrice(regConfId: string, body: Payment, isGlamping: boolean = false) {
+        let url_ = environment.registrationsConfigBaseUrl + "/{regConfId}/orders/calculate?";
+        if (regConfId === undefined || regConfId === null)
+            throw new Error("The parameter 'regConfId' must be defined.");
+        url_ = url_.replace("{regConfId}", encodeURIComponent("" + regConfId));
+        if (isGlamping !== undefined)
+            url_ += "isGlamping=" + encodeURIComponent("" + isGlamping) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
+        return this.http.post(url_, content_).toPromise();
+    }
+
+
+}
+
+export class Payment {
+    id?: string | undefined;
+    org?: string | undefined;
+    eventType: string;
+    teamType: string;
+    couponCode: string;
+    vipCode?: string | undefined;
+    token: IOPaqueData;
+    totalPrice: string | undefined;
+    paidPrice: string | undefined;
+    stage: string | undefined;
+    subTotalAmount: string | undefined;
+    taxAmount: string | undefined;
+    serviceFeeAmount: string | undefined;
+    discountAmount: string | undefined;
+    cardNumber?: number | undefined;
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.org = data["org"];
+            this.eventType = data["eventType"];
+            this.teamType = data["teamType"];
+            this.couponCode = data["couponCode"];
+            this.vipCode = data["vipCode"];
+            this.token = data["token"];
+            this.totalPrice = data["totalPrice"];
+            this.paidPrice = data["paidPrice"];
+            this.stage = data["stage"];
+            this.subTotalAmount = data["subTotalAmount"];
+            this.taxAmount = data["taxAmount"];
+            this.serviceFeeAmount = data["serviceFeeAmount"];
+            this.discountAmount = data["discountAmount"];
+            this.cardNumber = data["cardNumber"];
+        }
+    }
+
+    static fromJS(data: any): Payment {
+        let result = new Payment();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["org"] = this.org;
+        data["eventType"] = this.eventType;
+        data["teamType"] = this.teamType;
+        data["couponCode"] = this.couponCode;
+        data["vipCode"] = this.vipCode;
+        data["token"] = this.token;
+        data["totalPrice"] = this.totalPrice;
+        data["paidPrice"] = this.paidPrice;
+        data["stage"] = this.stage;
+        data["subTotalAmount"] = this.subTotalAmount;
+        data["taxAmount"] = this.taxAmount;
+        data["serviceFeeAmount"] = this.serviceFeeAmount;
+        data["discountAmount"] = this.discountAmount;
+        data["cardNumber"] = this.cardNumber;
+        return data;
+    }
+}
+
+export interface IOPaqueData {
+    dataDescriptor: 'COMMON.ACCEPT.INAPP.PAYMENT'
+    dataValue: string
 }
 
 
@@ -235,4 +324,16 @@ export class Shift {
     available: number
     index: number
 
+}
+
+export class VolunteerRequirements {
+    registrationConfigId: string;
+    shiftOpen: Date;
+    shiftClose: Date;
+    deadline: Date;
+    types: any;
+    VIP: Date;
+    EARLY: Date;
+    REGULAR: Date;
+    LAST_CHANCE: Date;
 }
