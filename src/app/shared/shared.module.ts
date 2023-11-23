@@ -16,12 +16,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MoneyPipe } from './pipe/money.pipe';
 
 @NgModule({
   declarations: [
     ComponentsComponent,
     FormComponent,
-    StepperComponent
+    StepperComponent,
+    MoneyPipe
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatDatepickerModule
   ],
   exports: [
-    FormComponent
+    FormComponent,
+    MoneyPipe
   ]
 })
 export class SharedModule { }

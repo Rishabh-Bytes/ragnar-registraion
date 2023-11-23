@@ -103,12 +103,12 @@ export interface Registration {
     lastName?: string | undefined;
     bornAt?: string | undefined;
     gender?: string | undefined;
-    phone?: string | undefined | void;
+    phone?: any; 
     country?: string | undefined;
     address?: string | undefined;
     address2?: string | undefined;
     city?: string | undefined;
-    state?: string | undefined;
+    state?: string | undefined;     
     zipCode?: number | undefined;
     type: string;
     customAttributes?: any;

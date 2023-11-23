@@ -48,7 +48,7 @@
         <mat-form-field>
           <mat-label>Phone</mat-label>
           <input name="phone" [(ngModel)]="members.phone" [required]="true" (focus)="formElementEnter(members)"
-            (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
+            (blur)="formatPhoneNumber(members.phone, members)" matInput placeholder="Event First Name" type="text" />
         </mat-form-field>
         <div
           *ngIf="(form.form.controls['phone'] && form.form.controls['phone'].errors && form.form.controls['phone'].touched)"

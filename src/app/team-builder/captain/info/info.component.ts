@@ -130,15 +130,6 @@ export class InfoComponent implements OnInit {
 
   next() {
     this.isNextClicked = true;
-    console.log(
-      '🚀 ~ file: info.component.ts:99 ~ InfoComponent ~ next ~ this.state:',
-      this.state
-    );
-    console.log(
-      '🚀 ~ file: info.component.ts:65 ~ InfoComponent ~ next ~ this.infoForm:',
-      this.infoForm
-    );
-
     this.state.team.runnersMax = this.CategoryService.getCategoryRunnersMax(
       this.state.registrationConfig.type,
       this.state.team.type
@@ -165,6 +156,10 @@ export class InfoComponent implements OnInit {
         this.state.price = price;
       })
       .then(() => {
+        const stateName = this.authService.getRedirectParams().params.regConfigId;
+        const newStateName = 'team-builder/' + stateName + '/registration/captain';
+        console.log('StateName...', newStateName);
+        this.router.navigate([newStateName + '/payment']);
         // return this.$state.go('team-builder.registration.captain.payment');
       });
   }
@@ -189,4 +184,32 @@ export class InfoComponent implements OnInit {
     console.log('StateName...', newStateName);
     this.router.navigate([newStateName + '/payment']);
   }
+
+  formElementExit(form: any) {
+    this.inputFocusCount = 0;
+    this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('FORM_ELEMENT_EXIT', {
+        formName: 'team_builder_registration_form',
+        ...this.getDataLayerFormObjWithoutModel(form),
+    })
+}
+
+getDataLayerFormObjWithoutModel(form:any) {
+  const formFields:any = {};
+  Object.keys(form).forEach((key: any) => {
+      if (!key.includes('$')) {
+          formFields[key] = form[key] || '';
+      }
+  });
+  return formFields;
+}
+
+formatPhoneNumber(s:any, member:any) {
+  let s2 = ("" + s).replace(/\D/gm, '');
+  let m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+  this.state.captain.phone = (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+
+  if (member) {
+      this.formElementExit(member)
+  }
+}
 }

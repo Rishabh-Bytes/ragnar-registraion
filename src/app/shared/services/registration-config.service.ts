@@ -104,6 +104,15 @@ export class RegistrationConfigService {
         return this.http.post(url_, content_).toPromise();
     }
 
+    getByProfileId(profileId: string){
+        let url_ = environment.registrationsConfigBaseUrl + "/profiles/getUser/" + profileId;
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";    
+        return this.http.get(url_).toPromise();
+
+    }
+
 
 }
 
@@ -188,7 +197,7 @@ export class Registration {
     lastName?: string | undefined;
     bornAt?: string | undefined;
     gender?: string | undefined;
-    phone?: string | undefined | void;
+    phone?: any;
     country?: string | undefined;
     address?: string | undefined;
     address2?: string | undefined;
@@ -336,4 +345,14 @@ export class VolunteerRequirements {
     EARLY: Date;
     REGULAR: Date;
     LAST_CHANCE: Date;
+}
+
+export class OrderPrice {
+    subTotal: number;
+    discounts: number;
+    total: number;
+    fees: number;
+    taxes: number;
+    unitPrice?: number;
+    stage?: string;
 }

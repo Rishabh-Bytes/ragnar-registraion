@@ -28,11 +28,7 @@
 
       <div>
         <label>Address Line 2</label>
-        <input
-          type="text"
-          name="address2"
-          [(ngModel)]="state.captain.address2"
-        />
+        <input type="text" name="address2" [(ngModel)]="state.captain.address2" />
       </div>
 
       <div>
@@ -53,24 +49,25 @@
     <h2>Order Summary</h2>
     <div>
       <label>Promo Code</label>
-      <input type="text" name="promoCode" [(ngModel)]="state.promoCode" />
+      <input type="text" placeholder="Have a Promo Code?" name="promoCode" [(ngModel)]="state.promoCode" />
     </div>
-    <b>Subtotal</b>&nbsp; <span>{{ state.price?.subTotal }}</span
-    ><br />
+    <b>Subtotal</b>&nbsp; <span>{{ state.price?.subTotal | money:2 }}</span><br />
     <b>Service Fees</b>
-    <span>{{ state.price?.fees }}</span
-    ><br />
+    <span>{{ state.price?.fees | money:2 }}</span><br />
     <b>Discount</b>
-    <span>{{ state.price?.discounts }}</span
-    ><br />
+    <span>{{ state.price?.discounts | money:2 }}</span><br />
     <b>Total Amount</b>
-    <span>{{ state.price?.total }}</span
-    ><br />
+    <span>{{ state.price?.total | money:2 }}</span><br />
   </div>
   <br />
   <div>
-    <b>Type</b>&nbsp; <span>{{ state.registrationConfig.name }}</span
-    ><br />
+    <b>Type</b>&nbsp; <span>{{ state.registrationConfig.name }}</span>
+    <div>
+      {{ state.team.type | titlecase }} ({{
+      state.team.runnersMax }}) Team - {{ state.price?.subTotal | money:2
+      }}
+    </div>
+    <br />
   </div>
   <div>
     <b>Event Date</b>&nbsp;
