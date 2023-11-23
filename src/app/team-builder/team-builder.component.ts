@@ -29,7 +29,7 @@ export class TeamBuilderComponent implements OnInit {
     private stateService: StateService,
     private router: Router,
     private authService: AuthService
-  ) { }
+  ) {}
   async ngOnInit() {
     this.regConfigId = this.route.snapshot.params['eventId'];
 
@@ -48,7 +48,6 @@ export class TeamBuilderComponent implements OnInit {
               this.regConfigId
             ).then(
               (registrationConfig: any) => {
-                debugger
                 const url = this.router.url.split('?')[0];
                 console.log('before ? ', url);
                 this.authService.setRedirectParams(url, {
@@ -64,13 +63,14 @@ export class TeamBuilderComponent implements OnInit {
                 this.state = this.authService.getRedirectParams();
                 console.log('getState', this.state);
 
-                if (
-                  this.authService.getRedirectParams().stateName ===
-                  url
-                ) {
-                  this.router.navigateByUrl('/', { skipLocationChange: false }).then(() => {
-                    this.router.navigate([this.authService.getRedirectParams().stateName]);
-                  });
+                if (this.authService.getRedirectParams().stateName === url) {
+                  this.router
+                    .navigateByUrl('/', { skipLocationChange: false })
+                    .then(() => {
+                      this.router.navigate([
+                        this.authService.getRedirectParams().stateName,
+                      ]);
+                    });
                   // this.router.navigate([this.authService.getRedirectParams().stateName]);
                 } else {
                 }

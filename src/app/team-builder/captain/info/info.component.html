@@ -1,72 +1,142 @@
 <form #infoForm="ngForm">
+  <app-form [members]="member" [state]="state"></app-form>
 
-    <app-form [members]="member" [state]="state"></app-form>
-
-    <div *ngFor="let customField of state.registrationConfig.funnel?.form.customFields">
-
-        <div class="md-input label md-label" style="text-transform: capitalize; height: inherit;">{{
-            customField.fieldLabel | lowercase }} <span ng-if="customField.fieldRequired" class="required">*</span>
-        </div>
-
-        <input *ngIf="customField.fieldStyle == 'text'" name="{{customField.name }}" [(ngModel)]="customField.answer"
-            [required]="customField.fieldRequired">
-        <select *ngIf="customField.fieldStyle == 'select'" matNativeControl required name="{{ customField.name }}"
-            [(ngModel)]="customField.answer" [required]="customField.fieldRequired">
-            <option [value]="option.label" *ngFor="let option of customField.options">{{ option.label }}</option>
-        </select>
-
-        <div *ngIf="(infoForm.form.controls[customField.name] && infoForm.form.controls[customField.name].errors && infoForm.form.controls[customField.name].touched) || (infoForm.form.controls[customField.name] && infoForm.form.controls[customField.name].errors && isNextClicked)"
-            class="invalid-feedback">
-            <mat-error *ngIf="infoForm.form.controls[customField.name].errors">
-                {{customField.fieldLabel |
-                lowercase}} {{'is required'}}</mat-error>
-        </div>
-
-        <div class="hint" *ngIf="customField.hint">{{ customField.hint }}</div>
-
-
+  <div
+    *ngFor="
+      let customField of state.registrationConfig.funnel?.form.customFields
+    "
+  >
+    <div
+      class="md-input label md-label"
+      style="text-transform: capitalize; height: inherit"
+    >
+      {{ customField.fieldLabel | lowercase }}
+      <span ng-if="customField.fieldRequired" class="required">*</span>
     </div>
 
-    <div>
-        <h4>Select Team type <span class="required">*</span></h4>
+    <input
+      *ngIf="customField.fieldStyle == 'text'"
+      name="{{ customField.name }}"
+      [(ngModel)]="customField.answer"
+      [required]="customField.fieldRequired"
+    />
+    <select
+      *ngIf="customField.fieldStyle == 'select'"
+      matNativeControl
+      required
+      name="{{ customField.name }}"
+      [(ngModel)]="customField.answer"
+      [required]="customField.fieldRequired"
+    >
+      <option [value]="option.label" *ngFor="let option of customField.options">
+        {{ option.label }}
+      </option>
+    </select>
 
-        <div *ngIf="state.teamPrices.standard" (click)="selectType('REGULAR')">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" [(ngModel)]="state.team.type"
-                value="REGULAR" class="custom-control-input" checked="true">
-            <label class="custom-control-label" for="customRadioInline1">Regular -
-                ${{state.teamPrices.standard }} (Team of {{standardTeam}})
-                ${{state.teamPrices.standard /standardTeam | number : '1.2-2'}} per
-                runner</label>
-        </div>
-
-        <div *ngIf="state.teamPrices.ultra" class="custom-control custom-radio custom-control-inline"
-            (click)="selectType('ULTRA')">
-            <input type="radio" id="customRadioInline2" name="customRadioInline1" [(ngModel)]="state.team.type"
-                value="ULTRA" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Ultra -
-                ${{state.teamPrices.ultra }} (Team of {{ultraTeam}})
-                ${{state.teamPrices.ultra /ultraTeam | number : '1.2-2'}} per
-                runner</label>
-        </div>
-
-        <div *ngIf="state.teamPrices.highSchool" class="custom-control custom-radio custom-control-inline"
-            (click)="selectType('HIGH_SCHOOL')">
-            <input type="radio" id="customRadioInline3" name="customRadioInline1" [(ngModel)]="state.team.type"
-                value="HIGH_SCHOOL" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline3">High School -
-                ${{state.teamPrices.highSchool }} (Team of {{standardTeam}})
-                ${{state.teamPrices.highSchool/standardTeam | number : '1.2-2'}} per
-                runner</label>
-        </div>
-        <div *ngIf="state.teamPrices.blackLoop && (state.registrationConfig.type == 'TRAIL')"
-            class="custom-control custom-radio custom-control-inline" (click)="selectType('BLACK_LOOP')">
-            <input type="radio" id="customRadioInline4" name="customRadioInline1" [(ngModel)]="state.team.type"
-                value="BLACK_LOOP" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline4">Black Loop -
-                ${{state.teamPrices.blackLoop }} (Team of {{blackLoopTeam}})
-                ${{state.teamPrices.blackLoop/blackLoopTeam | number : '1.2-2'}} per
-                runner</label>
-        </div>
+    <div
+      *ngIf="
+        (infoForm.form.controls[customField.name] &&
+          infoForm.form.controls[customField.name].errors &&
+          infoForm.form.controls[customField.name].touched) ||
+        (infoForm.form.controls[customField.name] &&
+          infoForm.form.controls[customField.name].errors &&
+          isNextClicked)
+      "
+      class="invalid-feedback"
+    >
+      <mat-error *ngIf="infoForm.form.controls[customField.name].errors">
+        {{ customField.fieldLabel | lowercase }} {{ "is required" }}</mat-error
+      >
     </div>
-    <button (click)="next()">NEXT</button>
+
+    <div class="hint" *ngIf="customField.hint">{{ customField.hint }}</div>
+  </div>
+
+  <div>
+    <h4>Select Team type <span class="required">*</span></h4>
+
+    <div *ngIf="state.teamPrices.standard" (click)="selectType('REGULAR')">
+      <input
+        type="radio"
+        id="customRadioInline1"
+        name="customRadioInline1"
+        [(ngModel)]="state.team.type"
+        value="REGULAR"
+        class="custom-control-input"
+        checked="true"
+      />
+      <label class="custom-control-label" for="customRadioInline1"
+        >Regular - ${{ state.teamPrices.standard }} (Team of {{ standardTeam }})
+        ${{ state.teamPrices.standard / standardTeam | number : "1.2-2" }} per
+        runner</label
+      >
+    </div>
+
+    <div
+      *ngIf="state.teamPrices.ultra"
+      class="custom-control custom-radio custom-control-inline"
+      (click)="selectType('ULTRA')"
+    >
+      <input
+        type="radio"
+        id="customRadioInline2"
+        name="customRadioInline1"
+        [(ngModel)]="state.team.type"
+        value="ULTRA"
+        class="custom-control-input"
+      />
+      <label class="custom-control-label" for="customRadioInline2"
+        >Ultra - ${{ state.teamPrices.ultra }} (Team of {{ ultraTeam }}) ${{
+          state.teamPrices.ultra / ultraTeam | number : "1.2-2"
+        }}
+        per runner</label
+      >
+    </div>
+
+    <div
+      *ngIf="state.teamPrices.highSchool"
+      class="custom-control custom-radio custom-control-inline"
+      (click)="selectType('HIGH_SCHOOL')"
+    >
+      <input
+        type="radio"
+        id="customRadioInline3"
+        name="customRadioInline1"
+        [(ngModel)]="state.team.type"
+        value="HIGH_SCHOOL"
+        class="custom-control-input"
+      />
+      <label class="custom-control-label" for="customRadioInline3"
+        >High School - ${{ state.teamPrices.highSchool }} (Team of
+        {{ standardTeam }}) ${{
+          state.teamPrices.highSchool / standardTeam | number : "1.2-2"
+        }}
+        per runner</label
+      >
+    </div>
+    <div
+      *ngIf="
+        state.teamPrices.blackLoop && state.registrationConfig.type == 'TRAIL'
+      "
+      class="custom-control custom-radio custom-control-inline"
+      (click)="selectType('BLACK_LOOP')"
+    >
+      <input
+        type="radio"
+        id="customRadioInline4"
+        name="customRadioInline1"
+        [(ngModel)]="state.team.type"
+        value="BLACK_LOOP"
+        class="custom-control-input"
+      />
+      <label class="custom-control-label" for="customRadioInline4"
+        >Black Loop - ${{ state.teamPrices.blackLoop }} (Team of
+        {{ blackLoopTeam }}) ${{
+          state.teamPrices.blackLoop / blackLoopTeam | number : "1.2-2"
+        }}
+        per runner</label
+      >
+    </div>
+  </div>
+  <button (click)="next()">NEXT</button>
 </form>

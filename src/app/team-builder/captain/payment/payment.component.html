@@ -1,0 +1,79 @@
+<form #form="ngForm">
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <!-- <form [formGroup]="form" > -->
+      <!-- <formly-form [form]="form" [model]="models" [fields]="fields"></formly-form> -->
+      <!-- </form> -->
+      <h2>Address</h2>
+
+      <!-- <div class="addnew-user-popupbox-p3-input1 addnew-user1">
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input name="firstName" [(ngModel)]="members.firstName" [required]="true" (focus)="formElementEnter(members)"
+              (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
+          </mat-form-field>
+          <div
+            *ngIf="(form.form.controls['firstName'] && form.form.controls['firstName'].errors && form.form.controls['firstName'].touched)"
+            class="invalid-feedback">
+            <mat-error *ngIf="form.form.controls['firstName'].errors['required']">
+              {{'First Name is required'}}
+            </mat-error>
+          </div>
+        </div> -->
+
+      <div>
+        <label>Address Line 1</label>
+        <input type="text" name="address" [(ngModel)]="state.captain.address" />
+      </div>
+
+      <div>
+        <label>Address Line 2</label>
+        <input
+          type="text"
+          name="address2"
+          [(ngModel)]="state.captain.address2"
+        />
+      </div>
+
+      <div>
+        <label>City</label>
+        <input type="text" name="city" [(ngModel)]="state.captain.city" />
+      </div>
+
+      <div>
+        <label>Zip Code</label>
+        <input type="text" name="zipCode" [(ngModel)]="state.captain.zipCode" />
+      </div>
+    </div>
+  </div>
+</form>
+<br />
+<div>
+  <div>
+    <h2>Order Summary</h2>
+    <div>
+      <label>Promo Code</label>
+      <input type="text" name="promoCode" [(ngModel)]="state.promoCode" />
+    </div>
+    <b>Subtotal</b>&nbsp; <span>{{ state.price?.subTotal }}</span
+    ><br />
+    <b>Service Fees</b>
+    <span>{{ state.price?.fees }}</span
+    ><br />
+    <b>Discount</b>
+    <span>{{ state.price?.discounts }}</span
+    ><br />
+    <b>Total Amount</b>
+    <span>{{ state.price?.total }}</span
+    ><br />
+  </div>
+  <br />
+  <div>
+    <b>Type</b>&nbsp; <span>{{ state.registrationConfig.name }}</span
+    ><br />
+  </div>
+  <div>
+    <b>Event Date</b>&nbsp;
+    <span>{{ state.registrationConfig.startDate | date : "fullDate" }}</span>
+  </div>
+</div>

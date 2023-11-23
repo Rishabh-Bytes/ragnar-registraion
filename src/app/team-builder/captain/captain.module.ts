@@ -6,21 +6,17 @@ import { CaptainComponent } from './captain.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-
-
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
-  declarations: [
-    CaptainComponent,
-    InfoComponent
-  ],
+  declarations: [CaptainComponent, InfoComponent, PaymentComponent],
   imports: [
     CommonModule,
     CaptainRoutingModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule
-  ]
+    MatFormFieldModule,
+  ],
 })
-export class CaptainModule { }
+export class CaptainModule {}
