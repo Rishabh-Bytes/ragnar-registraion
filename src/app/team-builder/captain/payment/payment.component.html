@@ -144,9 +144,11 @@
         type="text"
         name="zipCode"
         [(ngModel)]="state.captain.zipCode"
-        pattern="^(?=.{5,8}$)[A-Za-z0-9]+(?:\s[A-Za-z0-9]+)*$"
+        #zipCode="ngModel"
+        pattern="^\d{5}(?:[-\s]\d{4})?$"
         (focus)="formElementEnter(state.captain)"
-        (blur)="formElementExit(state.captain)"
+        (blur)="formElementExit(member)"
+        (change)="test(form.form)"
         [required]="true"
       />
       <div
@@ -158,8 +160,17 @@
         class="invalid-feedback"
       >
         <mat-error>
-          {{ "zipCode is required" }}
+          {{ "ZipCode is required" }}
         </mat-error>
+      </div>
+      <div
+        *ngIf="
+          form.form.controls['zipCode'] &&
+          form.form.controls['zipCode'].errors &&
+          form.form.controls['zipCode'].errors['pattern']
+        "
+      >
+        <mat-error>{{ "Invalid ZipCode" }}</mat-error>
       </div>
     </div>
   </div>
@@ -234,6 +245,157 @@
     <div>
       <h3>Event Date</h3>
       <div>{{ state.registrationConfig.startDate | date : "fullDate" }}</div>
+    </div>
+  </div>
+  <div>
+    <h4>Card Information</h4>
+  </div>
+  <div>
+    <div>
+      <input
+        type="radio"
+        id="customRadioInline1"
+        (click)="selectCard('card')"
+        name="customRadioInline1"
+        checked="checked"
+      />
+      <label [ngClass]="{ active: showButton === 'card' }"
+        >Credit/Debit Card</label
+      >
+    </div>
+  </div>
+  <div>
+    <div
+      *ngIf="showButton === 'card' || state.price!.total < affirmMinimumAmount"
+      [ngClass]="{
+        show_form:
+          showButton === 'card' || state.price!.total < affirmMinimumAmount
+      }"
+    >
+      <div>
+        <div>
+          <label>Name on Card</label>
+          <input
+            name="ccName"
+            type="text"
+            [(ngModel)]="cardData.name"
+            [required]="true"
+          />
+          <div
+            *ngIf="
+              form.form.controls['ccName'] &&
+              form.form.controls['ccName'].errors &&
+              form.form.controls['ccName'].touched
+            "
+            class="invalid-feedback"
+          >
+            <mat-error>
+              {{ "Name On Card is required" }}
+            </mat-error>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>Card Number</div>
+        <input
+          [maxlength]="23"
+          name="ccCardNumber"
+          type="tel"
+          [autocomplete]="false"
+          [(ngModel)]="cardData.cardNumber"
+          (ngModelChange)="validateCC(cardData.cardNumber)"
+          [required]="true"
+        />
+        <div
+          *ngIf="
+            form.form.controls['ccCardNumber'] &&
+            form.form.controls['ccCardNumber'].errors &&
+            form.form.controls['ccCardNumber'].touched
+          "
+          class="invalid-feedback"
+        >
+          <mat-error>
+            {{ "Card Number is required" }}
+          </mat-error>
+        </div>
+      </div>
+      <div>
+        <div>Date</div>
+        <input
+          type="tel"
+          name="ccExpiration"
+          auto-slash
+          [maxlength]="5"
+          [autocomplete]="false"
+          pattern="/^(0[1-9]|1[012])[ -\/]\d\d$/"
+          [(ngModel)]="cardData.expiration"
+          [required]="true"
+        />
+        <div
+          *ngIf="
+            form.form.controls['ccExpiration'] &&
+            form.form.controls['ccExpiration'].errors &&
+            form.form.controls['ccExpiration'].touched
+          "
+          class="invalid-feedback"
+        >
+          <mat-error>
+            {{ "Expiration Date is required" }}
+          </mat-error>
+        </div>
+        <div *ngIf="form.form.controls['ccExpiration'].errors?.['pattern']">
+          <mat-error>{{ "Invalid Format" }}</mat-error>
+        </div>
+      </div>
+      <div>
+        <div>CVV</div>
+        <input
+          name="ccCardCode"
+          type="password"
+          pattern="/^[0-9]{3,4}$/"
+          [maxLength]="4"
+          [autocomplete]="false"
+          [(ngModel)]="cardData.cardCode"
+          [required]="true"
+        />
+        <div
+          *ngIf="
+            form.form.controls['ccCardCode'] &&
+            form.form.controls['ccCardCode'].errors &&
+            form.form.controls['ccCardCode'].touched
+          "
+          class="invalid-feedback"
+        >
+          <mat-error>
+            {{ "CVV is required" }}
+          </mat-error>
+        </div>
+        <div *ngIf="form.form.controls['ccCardCode'].errors?.['pattern']">
+          <mat-error>{{ "Invalid CVV" }}</mat-error>
+        </div>
+      </div>
+      <div>
+        <div>ZipCode</div>
+        <input
+          name="ccZip"
+          type="tel"
+          [autocomplete]="false"
+          [(ngModel)]="cardData.zip"
+          [required]="true"
+        />
+        <div
+          *ngIf="
+            form.form.controls['ccZip'] &&
+            form.form.controls['ccZip'].errors &&
+            form.form.controls['ccZip'].touched
+          "
+          class="invalid-feedback"
+        >
+          <mat-error>
+            {{ "ZipCode is required" }}
+          </mat-error>
+        </div>
+      </div>
     </div>
   </div>
 </form>

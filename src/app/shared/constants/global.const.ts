@@ -7,4 +7,5 @@ export const PATTERNS = {
   ONLY_DIGITS: '[0-9].{9,11}',
   AGE: /^[0-9]*$/,
   ALPHA_NUMERIC: /^[a-zA-Z0-9]*$/,
+  zipCode: /^([(]\d{3}[)] )(\d{3})([-]\d{4})$/,
 };

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { AGE_OF_MAJORITY } from 'src/app/shared/constants/local-storage.const';
@@ -93,6 +93,7 @@ export class PaymentComponent implements OnInit {
             : this.state.team.type,
         quantity: '1',
       }
+
       //  {
       //     currency: 'USD',
       //     value: +(this.state.price.total + this.state.price.taxes),
@@ -248,7 +249,7 @@ export class PaymentComponent implements OnInit {
             (country) => country.value === this.member.country
           );
           this.stateService.setState('country', country);
-          debugger;
+
           if (this.stateService.getState('country')) {
             this.getUserState();
           }
@@ -459,4 +460,12 @@ export class PaymentComponent implements OnInit {
   //         }]
   //     });
   // }
+
+  test(form: FormGroup) {
+    console.log('fomr', form);
+  }
+
+  selectCard(type: any) {
+    this.showButton = type;
+  }
 }
