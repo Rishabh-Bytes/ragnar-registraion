@@ -1,13 +1,7 @@
 <form #form="ngForm">
-  <div class="row">
-    <div class="col-md-4 mb-4">
-      <!-- <form [formGroup]="form" > -->
-      <!-- <formly-form [form]="form" [model]="models" [fields]="fields"></formly-form> -->
-      <!-- </form> -->
-      <h3>Contact Info</h3>
-
-      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
-        <mat-form-field>
+  <div class="regis-forms-commbox">
+      <div class="contact-form-field">
+        <mat-form-field appearance="fill"floatLabel="always">
           <mat-label>First Name</mat-label>
           <input name="firstName" [(ngModel)]="members.firstName" [required]="true" (focus)="formElementEnter(members)"
             (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
@@ -21,8 +15,8 @@
         </div>
       </div>
 
-      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
-        <mat-form-field>
+      <div class="contact-form-field">
+        <mat-form-field appearance="fill"floatLabel="always">
           <mat-label>Last Name</mat-label>
           <input name="lastName" [(ngModel)]="members.lastName" [required]="true" (focus)="formElementEnter(members)"
             (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
@@ -36,16 +30,16 @@
         </div>
       </div>
 
-      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
-        <mat-form-field>
+      <div class="contact-form-field">
+        <mat-form-field appearance="fill"floatLabel="always">
           <mat-label>Email</mat-label>
           <input name="email" [(ngModel)]="members.email" [required]="true" (focus)="formElementEnter(members)"
             (blur)="formElementExit(members)" [pattern]="emailRegex" matInput placeholder="Event First Name" type="text" [disabled]="true"/>
         </mat-form-field>
       </div>
    
-      <div class="addnew-user-popupbox-p3-input1 addnew-user1">
-        <mat-form-field>
+      <div class="contact-form-field">
+        <mat-form-field appearance="fill"floatLabel="always">
           <mat-label>Phone</mat-label>
           <input name="phone" [(ngModel)]="members.phone" [required]="true" (focus)="formElementEnter(members)"
             (blur)="formatPhoneNumber(members.phone, members)" matInput placeholder="Event First Name" type="text" />
@@ -58,6 +52,5 @@
           </mat-error>
         </div>
       </div>
-    </div>
   </div>
 </form>

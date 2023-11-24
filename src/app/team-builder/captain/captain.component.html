@@ -1,1 +1,45 @@
-<router-outlet *ngIf="this.state"></router-outlet>
+<div class="regis-body">
+    <div class="regis-header-box">
+        <div class="regis-header">
+            <img src="https://i.ibb.co/pKsHtm6/ragnar-logo.webp">
+        </div>
+        <div class="regis-steps">
+            <div class="regis-steps-boxes">
+                <div class="regis-steps-box active">
+                    <div class="regis-steps-box-count">
+                        <span>1</span>
+                    </div>
+                    <div class="regis-steps-box-title">
+                        <h2>Info</h2>
+                    </div>
+                </div>
+                <div class="regis-steps-box-div">
+                    <span></span>
+                </div>
+                <div class="regis-steps-box">
+                    <div class="regis-steps-box-count">
+                        <span>2</span>
+                    </div>
+                    <div class="regis-steps-box-title">
+                        <h2>Payment</h2>
+                    </div>
+                </div>
+                <div class="regis-steps-box-div">
+                    <span></span>
+                </div>
+                <div class="regis-steps-box">
+                    <div class="regis-steps-box-count">
+                        <span>3</span>
+                    </div>
+                    <div class="regis-steps-box-title">
+                        <h2>Confirmation</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <router-outlet *ngIf="this.state"></router-outlet>
+</div>
+
+
+

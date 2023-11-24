@@ -1,0 +1,322 @@
+.regis-forms.regis-ci-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    form {
+        width: 100%;
+        display: flex;
+    }
+
+    .regis-forms-fullbox {
+        width: calc(100% - 310px);
+        margin: 0px auto 50px auto;
+        background-color: #fff;
+        border: 1px solid #0f0f0f;
+        box-shadow: 0 2px 20px rgba(20, 20, 43, .05);
+        border-radius: 20px;
+        display: flex;
+        flex-flow: column;
+        padding: 55px;
+        @media screen and (max-width: 1280px) {
+            width: calc(100% - 180px);
+            padding: 40px;
+        }
+        @media screen and (max-width: 1024px) {
+            width: calc(100% - 160px);
+        }
+        @media screen and (max-width: 767px) {
+            margin: 0 16px 15px;
+            width: calc(100% - 72px);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    }
+
+    .regis-forms-maintitle {
+        h3 {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 30px;
+            line-height: 29px;
+            color: #0e0e0e;
+            margin: 0 0 32px;
+
+            @media screen and (max-width: 767px) {
+                font-size: 20px;
+                line-height: 20px;
+            }
+        }
+    }
+
+    .regis-forms-ci-main-box {
+        display: flex;
+        gap: 32px;
+
+        @media screen and (max-width: 1024px) {
+            flex-flow: column;
+        }
+
+        .regis-forms-ci-left {
+            flex: 1;
+
+            ::ng-deep {
+                .regis-forms-commbox {
+                    display: flex;
+                    flex-flow: wrap;
+                    gap: 32px;
+
+                    @media screen and (max-width: 767px) {
+                        flex-flow: column;
+                        gap: 24px;
+                    }
+
+                    .contact-form-field {
+                        width: calc(50% - 16px);
+
+                        @media screen and (max-width: 767px) {
+                            width: calc(100% - 0px);
+                        }
+
+                        .mat-mdc-form-field-type-mat-input {
+                            width: 100%;
+
+                            .mdc-text-field {
+                                background-color: transparent !important;
+                                padding: 0px;
+                                border-radius: 5px;
+
+                                .mat-mdc-form-field-infix {
+                                    padding: 0px;
+                                    display: flex;
+                                    min-height: 46px;
+                                    position: relative;
+                                    flex-flow: column;
+
+                                    .mdc-floating-label {
+                                        text-align: left;
+                                        font-style: normal;
+                                        font-weight: 400;
+                                        font-size: 24px;
+                                        line-height: 150%;
+                                        color: #30343d;
+                                        height: 36px;
+                                        position: relative;
+                                        top: 40px;
+                                        margin-bottom: 0px;
+
+                                        mat-label {
+                                            font-weight: 400;
+                                            font-size: 24px;
+                                            line-height: 150%;
+                                            color: #30343d;
+                                        }
+                                    }
+
+                                    input {
+                                        background: #fff;
+                                        border: 1px solid #30343d;
+                                        border-radius: 5px;
+                                        width: calc(100% - 34px);
+                                        padding: 0px 16px;
+                                        color: rgba(0, 0, 0, 0.87);
+                                        font-size: 14px;
+                                        min-height: 46px;
+                                    }
+                                }
+                            }
+
+                            .mdc-text-field.mdc-text-field--disabled {
+                                input {
+                                    opacity: 0.4;
+                                }
+
+                                color: #bbbbbb;
+                            }
+
+                            .mdc-text-field.mdc-text-field--invalid {
+                                .mdc-floating-label {
+                                    mat-label {
+                                        color: #f44336;
+                                    }
+
+                                    span {
+                                        color: #f44336;
+                                    }
+                                }
+                            }
+                        }
+
+                        .mat-mdc-form-field:hover .mat-mdc-form-field-focus-overlay,
+                        .mat-mdc-form-field:focus .mat-mdc-form-field-focus-overlay,
+                        .mat-mdc-form-field:visited .mat-mdc-form-field-focus-overlay,
+                        .mdc-text-field--focused .mat-mdc-form-field-focus-overlay {
+                            opacity: 0;
+                            background-color: transparent;
+                        }
+
+                        .mat-mdc-form-field-bottom-align {
+                            display: none;
+                        }
+
+                        .mdc-line-ripple--active::after {
+                            border-bottom-color: #f17a21;
+                        }
+                    }
+                }
+            }
+
+            .regis-forms-ci-Consent {
+                margin-top: 28px;
+
+                .md-input {
+                    text-transform: capitalize;
+                    height: inherit;
+                    padding: 0;
+                    text-align: left;
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 150%;
+                    color: #30343d;
+                    height: 36px;
+                    margin-bottom: 8px;
+                    outline: none;
+
+                    @media screen and (max-width: 1024px) {
+                        font-size: 18px;
+                    }
+                }
+
+                select {
+                    background: #fff;
+                    border: 1px solid #30343d;
+                    border-radius: 5px;
+                    min-height: 38px;
+                    height: 38px;
+                    padding: 0 10px;
+                    font-size: 14px;
+                    width: 100%;
+                }
+
+                .hint {
+                    text-align: left;
+                    color: #acacac;
+                    margin-top: 7px;
+                    padding-left: 7px;
+                }
+            }
+        }
+
+        .regis-forms-ci-right {
+            flex: 1;
+
+            .regis-forms-ci-right-data {
+                h4 {
+                    text-align: left;
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 150%;
+                    color: #30343d;
+                    margin: 0 0 8px;
+
+                    @media screen and (max-width: 1024px) {
+                        font-size: 18px;
+                    }
+                }
+
+                .custom-control.custom-radio {
+                    width: 100%;
+                    display: flex;
+                    margin-bottom: 32px;
+
+                    @media screen and (max-width: 767px) {
+                        margin-bottom: 12px;
+                    }
+
+                    label {
+                        background: #fff;
+                        border-radius: 5px;
+                        border: 1px solid #30343d;
+                        padding: 10px 0 10px 56px;
+                        width: 100%;
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 150%;
+                        color: #30343d;
+                        text-align: left;
+                        position: relative;
+                        cursor: pointer;
+
+                        @media screen and (max-width: 767px) {
+                            padding: 12px 56px 12px 16px;
+                            font-size: 14px;
+                        }
+                    }
+
+                    label::before {
+                        content: "";
+                        background-color: #fff;
+                        height: 22px;
+                        width: 22px;
+                        position: absolute;
+                        left: 20px;
+                        border: 1px solid #aeb4c2;
+                        border-radius: 100%;
+
+                        @media screen and (max-width: 767px) {
+                            top: calc(50% - 11px);
+                            left: auto;
+                            right: 12px
+                        }
+                    }
+
+                    input {
+                        position: absolute;
+                        display: none;
+                    }
+
+                    input[type=radio]:checked~label {
+                        background-color: #f78d2a;
+                        border: 1px solid #f78d2a;
+                        color: #fff
+                    }
+
+                    input[type=radio]:checked~label::before {
+                        border: 6px solid #ff9749;
+                        height: 12px;
+                        width: 12px
+                    }
+                }
+            }
+        }
+    }
+
+    .regis-forms-last-btn {
+        text-align: right;
+        margin-top: 26px;
+
+        button {
+            background: #f17a21;
+            border-radius: 10px;
+            padding: 12px 40px;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 35px;
+            text-transform: capitalize;
+            margin: 0;
+            border: none;
+            color: #fff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+            cursor: pointer;
+
+            @media screen and (max-width: 767px) {
+                font-size: 16px;
+                padding: 8px 40px;
+                width: 100%;
+            }
+        }
+    }
+}
