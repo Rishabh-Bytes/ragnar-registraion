@@ -14,6 +14,7 @@ import { CustomFieldDataService } from './shared/services/custom-field.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultPaceService } from './shared/services/defaultpace.service';
 import { CategoryService } from './shared/services/category.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,8 @@ import { CategoryService } from './shared/services/category.service';
     BrowserAnimationsModule,
     MatSnackBarModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [
     {
@@ -39,7 +41,7 @@ import { CategoryService } from './shared/services/category.service';
     PopUpService,
     CustomFieldDataService,
     DefaultPaceService,
-    CategoryService
+    CategoryService,
   ],
   bootstrap: [AppComponent],
 })

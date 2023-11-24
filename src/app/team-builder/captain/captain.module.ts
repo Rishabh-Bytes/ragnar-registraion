@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { PaymentComponent } from './payment/payment.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [CaptainComponent, InfoComponent, PaymentComponent],
@@ -17,6 +18,7 @@ import { PaymentComponent } from './payment/payment.component';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatSelectModule,
   ],
 })
 export class CaptainModule {}

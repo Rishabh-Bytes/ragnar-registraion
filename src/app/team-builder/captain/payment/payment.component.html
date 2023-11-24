@@ -1,18 +1,15 @@
 <form #form="ngForm">
-  <div class="row">
-    <div class="col-md-4 mb-4">
-      <!-- <form [formGroup]="form" > -->
-      <!-- <formly-form [form]="form" [model]="models" [fields]="fields"></formly-form> -->
-      <!-- </form> -->
-      <h2>Address</h2>
-
-      <!-- <div class="addnew-user-popupbox-p3-input1 addnew-user1">
+  <!-- <form [formGroup]="form" > -->
+  <!-- <formly-form [form]="form" [model]="models" [fields]="fields"></formly-form> -->
+  <!-- </form> -->
+  <h2>Address</h2>
+  <!-- <div class="addnew-user-popupbox-p3-input1 addnew-user1">
           <mat-form-field>
             <mat-label>First Name</mat-label>
             <input name="firstName" [(ngModel)]="members.firstName" [required]="true" (focus)="formElementEnter(members)"
               (blur)="formElementExit(members)" matInput placeholder="Event First Name" type="text" />
           </mat-form-field>
-          <div
+          <div>
             *ngIf="(form.form.controls['firstName'] && form.form.controls['firstName'].errors && form.form.controls['firstName'].touched)"
             class="invalid-feedback">
             <mat-error *ngIf="form.form.controls['firstName'].errors['required']">
@@ -20,57 +17,223 @@
             </mat-error>
           </div>
         </div> -->
-
-      <div>
-        <label>Address Line 1</label>
-        <input type="text" name="address" [(ngModel)]="state.captain.address" />
-      </div>
-
-      <div>
-        <label>Address Line 2</label>
-        <input type="text" name="address2" [(ngModel)]="state.captain.address2" />
-      </div>
-
-      <div>
-        <label>City</label>
-        <input type="text" name="city" [(ngModel)]="state.captain.city" />
-      </div>
-
-      <div>
-        <label>Zip Code</label>
-        <input type="text" name="zipCode" [(ngModel)]="state.captain.zipCode" />
-      </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select
+        select-drop-down
+        name="country"
+        [(ngModel)]="state.captain.country"
+        (ngModelChange)="onCountryChange($event)"
+      >
+        <mat-option *ngFor="let country of countries" [value]="country.value">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div
+      *ngIf="
+        form.form.controls['country'] &&
+        form.form.controls['country'].errors &&
+        form.form.controls['country'].touched
+      "
+      class="invalid-feedback"
+    >
+      <mat-error>
+        {{ "country is required" }}
+      </mat-error>
     </div>
   </div>
-</form>
-<br />
-<div>
-  <div>
-    <h2>Order Summary</h2>
+  <div *ngIf="state.captain.country">
     <div>
-      <label>Promo Code</label>
-      <input type="text" placeholder="Have a Promo Code?" name="promoCode" [(ngModel)]="state.promoCode" />
+      <mat-form-field>
+        <mat-label>State</mat-label>
+        <mat-select
+          select-drop-down
+          name="state"
+          [(ngModel)]="state.captain.state"
+        >
+          <mat-option *ngFor="let state of states" [value]="state.value">
+            {{ state.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div
+        *ngIf="
+          form.form.controls['state'] &&
+          form.form.controls['state'].errors &&
+          form.form.controls['state'].touched
+        "
+        class="invalid-feedback"
+      >
+        <mat-error>
+          {{ "state is required" }}
+        </mat-error>
+      </div>
     </div>
-    <b>Subtotal</b>&nbsp; <span>{{ state.price?.subTotal | money:2 }}</span><br />
-    <b>Service Fees</b>
-    <span>{{ state.price?.fees | money:2 }}</span><br />
-    <b>Discount</b>
-    <span>{{ state.price?.discounts | money:2 }}</span><br />
-    <b>Total Amount</b>
-    <span>{{ state.price?.total | money:2 }}</span><br />
+    <div>
+      <p>Addres Line 1</p>
+      <input
+        type="text"
+        name="address"
+        [(ngModel)]="state.captain.address"
+        [required]="true"
+      />
+      <div
+        *ngIf="
+          form.form.controls['address'] &&
+          form.form.controls['address'].errors &&
+          form.form.controls['address'].touched
+        "
+        class="invalid-feedback"
+      >
+        <mat-error>
+          {{ "Address is required" }}
+        </mat-error>
+      </div>
+    </div>
+    <div>
+      <p>Address Line 2</p>
+      <input
+        type="text"
+        name="address2"
+        [(ngModel)]="state.captain.address2"
+        (focus)="formElementEnter(state.captain)"
+        (blur)="formElementExit(state.captain)"
+        [required]="true"
+      />
+      <div
+        *ngIf="
+          form.form.controls['address2'] &&
+          form.form.controls['address2'].errors &&
+          form.form.controls['address2'].touched
+        "
+        class="invalid-feedback"
+      >
+        <mat-error>
+          {{ "Address2 is required" }}
+        </mat-error>
+      </div>
+    </div>
+    <div>
+      <p>City</p>
+      <input
+        type="text"
+        name="city"
+        [(ngModel)]="state.captain.city"
+        (focus)="formElementEnter(state.captain)"
+        (blur)="formElementExit(state.captain)"
+        [required]="true"
+      />
+      <div
+        *ngIf="
+          form.form.controls['city'] &&
+          form.form.controls['city'].errors &&
+          form.form.controls['city'].touched
+        "
+        class="invalid-feedback"
+      >
+        <mat-error>
+          {{ "City is required" }}
+        </mat-error>
+      </div>
+    </div>
+    <div>
+      <p>Zip Code</p>
+      <input
+        type="text"
+        name="zipCode"
+        [(ngModel)]="state.captain.zipCode"
+        pattern="^(?=.{5,8}$)[A-Za-z0-9]+(?:\s[A-Za-z0-9]+)*$"
+        (focus)="formElementEnter(state.captain)"
+        (blur)="formElementExit(state.captain)"
+        [required]="true"
+      />
+      <div
+        *ngIf="
+          form.form.controls['zipCode'] &&
+          form.form.controls['zipCode'].errors &&
+          form.form.controls['zipCode'].touched
+        "
+        class="invalid-feedback"
+      >
+        <mat-error>
+          {{ "zipCode is required" }}
+        </mat-error>
+      </div>
+    </div>
   </div>
   <br />
   <div>
-    <b>Type</b>&nbsp; <span>{{ state.registrationConfig.name }}</span>
     <div>
-      {{ state.team.type | titlecase }} ({{
-      state.team.runnersMax }}) Team - {{ state.price?.subTotal | money:2
-      }}
+      <h2>Order Summary</h2>
+      <div>
+        <p>
+          Promo Code
+          <input
+            type="text"
+            placeholder="Have a Promo Code?"
+            name="promoCode"
+            [(ngModel)]="state.promoCode"
+            (focus)="formElementEnter({ promocode: state.promoCode })"
+            (blur)="
+              formElementExit({ promoCode: state.promoCode }); clearPromoCode()
+            "
+          />
+          <button
+            type="submit"
+            [disabled]="!state.promoCode"
+            (click)="getPrice()"
+            async-silent
+          >
+            Apply
+          </button>
+        </p>
+      </div>
+      <div>
+        <div>
+          <p>Subtotal</p>
+        </div>
+        <div>
+          <p>{{ state.price?.subTotal | money : 2 }}</p>
+        </div>
+      </div>
+      <div>
+        <div><p>Service Fees</p></div>
+        <div>
+          <p>{{ state.price?.fees | money : 2 }}</p>
+        </div>
+      </div>
+      <div>
+        <div>
+          <p>Discount</p>
+        </div>
+        <div>
+          <p>{{ state.price?.discounts | money : 2 }}</p>
+        </div>
+      </div>
+      <div>
+        <div>
+          <p>Total Amount</p>
+        </div>
+        <div>
+          <p>{{ state.price?.total | money : 2 }}</p>
+        </div>
+      </div>
     </div>
     <br />
+    <div>
+      <h3>Type</h3>
+      <div>{{ state.registrationConfig.name }}</div>
+      <div>
+        {{ state.team.type | titlecase }} ({{ state.team.runnersMax }}) Team -
+        {{ state.price?.subTotal | money : 2 }}
+      </div>
+    </div>
+    <br />
+    <div>
+      <h3>Event Date</h3>
+      <div>{{ state.registrationConfig.startDate | date : "fullDate" }}</div>
+    </div>
   </div>
-  <div>
-    <b>Event Date</b>&nbsp;
-    <span>{{ state.registrationConfig.startDate | date : "fullDate" }}</span>
-  </div>
-</div>
+</form>

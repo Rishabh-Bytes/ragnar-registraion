@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,13 +17,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MoneyPipe } from './pipe/money.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     ComponentsComponent,
     FormComponent,
     StepperComponent,
-    MoneyPipe
+    MoneyPipe,
   ],
   imports: [
     CommonModule,
@@ -40,11 +41,9 @@ import { MoneyPipe } from './pipe/money.pipe';
     MatInputModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    HttpClientModule,
   ],
-  exports: [
-    FormComponent,
-    MoneyPipe
-  ]
+  exports: [FormComponent, MoneyPipe],
 })
-export class SharedModule { }
+export class SharedModule {}
