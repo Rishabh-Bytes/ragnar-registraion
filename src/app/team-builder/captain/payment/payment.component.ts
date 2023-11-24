@@ -21,6 +21,7 @@ import {
   RegistrationConfigService,
 } from 'src/app/shared/services/registration-config.service';
 import { StateService } from 'src/app/shared/services/state.service';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 
 @Component({
   selector: 'app-payment',
@@ -45,6 +46,13 @@ export class PaymentComponent implements OnInit {
   svgDiscover: string;
   waivers: CustomFieldsGroup[] | any;
   cardData: ICardData;
+  name: string;
+  cardNumber: string;
+  month: string;
+  year: string;
+  cardCode: string;
+  zip?: string;
+  expiration: string;
   cardType: string | null;
   constructor(
     private stateService: StateService,
@@ -52,7 +60,8 @@ export class PaymentComponent implements OnInit {
     private RegistrationConfigDataService: RegistrationConfigService,
     private popUpService: PopUpService,
     private CountryService: CountryService,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private UtilsService: UtilsService
   ) {}
 
   ngOnInit() {
@@ -105,6 +114,10 @@ export class PaymentComponent implements OnInit {
       // }
     );
     console.log('State Data...', this.state);
+  }
+
+  getTrustedHtml (html: any)  {
+    return this.UtilsService.getTrustedHtml(html);
   }
 
   formElementEnter(form: any) {
@@ -365,7 +378,7 @@ export class PaymentComponent implements OnInit {
   validateCC(number: any) {
     if (number) {
       number = number.replace(/\s+/g, '');
-      this.cardData.cardNumber = this.crediCardFormatter(number);
+      this.cardNumber = this.crediCardFormatter(number);
       // visa
       let re = new RegExp('^4');
       if (number.match(re) !== null) {

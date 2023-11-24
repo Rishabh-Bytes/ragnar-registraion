@@ -20,25 +20,18 @@
   <div>
     <mat-form-field>
       <mat-label>Country</mat-label>
-      <mat-select
-        select-drop-down
-        name="country"
-        [(ngModel)]="state.captain.country"
-        (ngModelChange)="onCountryChange($event)"
-      >
+      <mat-select select-drop-down name="country" [(ngModel)]="state.captain.country"
+        (ngModelChange)="onCountryChange($event)">
         <mat-option *ngFor="let country of countries" [value]="country.value">
           {{ country.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div
-      *ngIf="
+    <div *ngIf="
         form.form.controls['country'] &&
         form.form.controls['country'].errors &&
         form.form.controls['country'].touched
-      "
-      class="invalid-feedback"
-    >
+      " class="invalid-feedback">
       <mat-error>
         {{ "country is required" }}
       </mat-error>
@@ -48,24 +41,17 @@
     <div>
       <mat-form-field>
         <mat-label>State</mat-label>
-        <mat-select
-          select-drop-down
-          name="state"
-          [(ngModel)]="state.captain.state"
-        >
+        <mat-select select-drop-down name="state" [(ngModel)]="state.captain.state">
           <mat-option *ngFor="let state of states" [value]="state.value">
             {{ state.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div
-        *ngIf="
+      <div *ngIf="
           form.form.controls['state'] &&
           form.form.controls['state'].errors &&
           form.form.controls['state'].touched
-        "
-        class="invalid-feedback"
-      >
+        " class="invalid-feedback">
         <mat-error>
           {{ "state is required" }}
         </mat-error>
@@ -73,20 +59,12 @@
     </div>
     <div>
       <p>Addres Line 1</p>
-      <input
-        type="text"
-        name="address"
-        [(ngModel)]="state.captain.address"
-        [required]="true"
-      />
-      <div
-        *ngIf="
+      <input type="text" name="address" [(ngModel)]="state.captain.address" [required]="true" />
+      <div *ngIf="
           form.form.controls['address'] &&
           form.form.controls['address'].errors &&
           form.form.controls['address'].touched
-        "
-        class="invalid-feedback"
-      >
+        " class="invalid-feedback">
         <mat-error>
           {{ "Address is required" }}
         </mat-error>
@@ -94,22 +72,13 @@
     </div>
     <div>
       <p>Address Line 2</p>
-      <input
-        type="text"
-        name="address2"
-        [(ngModel)]="state.captain.address2"
-        (focus)="formElementEnter(state.captain)"
-        (blur)="formElementExit(state.captain)"
-        [required]="true"
-      />
-      <div
-        *ngIf="
+      <input type="text" name="address2" [(ngModel)]="state.captain.address2" (focus)="formElementEnter(state.captain)"
+        (blur)="formElementExit(state.captain)" [required]="true" />
+      <div *ngIf="
           form.form.controls['address2'] &&
           form.form.controls['address2'].errors &&
           form.form.controls['address2'].touched
-        "
-        class="invalid-feedback"
-      >
+        " class="invalid-feedback">
         <mat-error>
           {{ "Address2 is required" }}
         </mat-error>
@@ -117,22 +86,13 @@
     </div>
     <div>
       <p>City</p>
-      <input
-        type="text"
-        name="city"
-        [(ngModel)]="state.captain.city"
-        (focus)="formElementEnter(state.captain)"
-        (blur)="formElementExit(state.captain)"
-        [required]="true"
-      />
-      <div
-        *ngIf="
+      <input type="text" name="city" [(ngModel)]="state.captain.city" (focus)="formElementEnter(state.captain)"
+        (blur)="formElementExit(state.captain)" [required]="true" />
+      <div *ngIf="
           form.form.controls['city'] &&
           form.form.controls['city'].errors &&
           form.form.controls['city'].touched
-        "
-        class="invalid-feedback"
-      >
+        " class="invalid-feedback">
         <mat-error>
           {{ "City is required" }}
         </mat-error>
@@ -140,18 +100,23 @@
     </div>
     <div>
       <p>Zip Code</p>
-      <input
-        type="text"
-        name="zipCode"
-        [(ngModel)]="state.captain.zipCode"
-        #zipCode="ngModel"
-        pattern="^\d{5}(?:[-\s]\d{4})?$"
-        (focus)="formElementEnter(state.captain)"
-        (blur)="formElementExit(member)"
-        (change)="test(form.form)"
-        [required]="true"
-      />
+      <input type="text" name="zipCode" [(ngModel)]="state.captain.zipCode" #zipCode="ngModel"
+        pattern="^(?=.{5,8}$)[A-Za-z0-9]+(?:\s[A-Za-z0-9]+)*$" (focus)="formElementEnter(state.captain)"
+        (blur)="formElementExit(member)" (change)="test(form.form)" [required]="true" />
+
       <div
+        *ngIf="(form.form.controls['memberPhone'] && form.form.controls['memberPhone'].errors && form.form.controls['memberPhone'].touched)"
+        class="invalid-feedback">
+        <mat-error *ngIf="form.form.controls['memberPhone'].errors['required']">
+          {{ "ZipCode is required" }}
+
+        </mat-error>
+        <mat-error *ngIf="form.form.controls['memberPhone'].errors['pattern']">
+          <mat-error>{{ "Invalid ZipCode" }}</mat-error>
+
+        </mat-error>
+      </div>
+      <!-- <div
         *ngIf="
           form.form.controls['zipCode'] &&
           form.form.controls['zipCode'].errors &&
@@ -162,8 +127,8 @@
         <mat-error>
           {{ "ZipCode is required" }}
         </mat-error>
-      </div>
-      <div
+      </div> -->
+      <!-- <div
         *ngIf="
           form.form.controls['zipCode'] &&
           form.form.controls['zipCode'].errors &&
@@ -171,7 +136,7 @@
         "
       >
         <mat-error>{{ "Invalid ZipCode" }}</mat-error>
-      </div>
+      </div> -->
     </div>
   </div>
   <br />
@@ -181,22 +146,11 @@
       <div>
         <p>
           Promo Code
-          <input
-            type="text"
-            placeholder="Have a Promo Code?"
-            name="promoCode"
-            [(ngModel)]="state.promoCode"
-            (focus)="formElementEnter({ promocode: state.promoCode })"
-            (blur)="
+          <input type="text" placeholder="Have a Promo Code?" name="promoCode" [(ngModel)]="state.promoCode"
+            (focus)="formElementEnter({ promocode: state.promoCode })" (blur)="
               formElementExit({ promoCode: state.promoCode }); clearPromoCode()
-            "
-          />
-          <button
-            type="submit"
-            [disabled]="!state.promoCode"
-            (click)="getPrice()"
-            async-silent
-          >
+            " />
+          <button type="submit" [disabled]="!state.promoCode" (click)="getPrice()" async-silent>
             Apply
           </button>
         </p>
@@ -210,7 +164,9 @@
         </div>
       </div>
       <div>
-        <div><p>Service Fees</p></div>
+        <div>
+          <p>Service Fees</p>
+        </div>
         <div>
           <p>{{ state.price?.fees | money : 2 }}</p>
         </div>
@@ -252,43 +208,25 @@
   </div>
   <div>
     <div>
-      <input
-        type="radio"
-        id="customRadioInline1"
-        (click)="selectCard('card')"
-        name="customRadioInline1"
-        checked="checked"
-      />
-      <label [ngClass]="{ active: showButton === 'card' }"
-        >Credit/Debit Card</label
-      >
+      <input type="radio" id="customRadioInline1" (click)="selectCard('card')" name="customRadioInline1"
+        checked="checked" />
+      <label [ngClass]="{ active: showButton === 'card' }">Credit/Debit Card</label>
     </div>
   </div>
   <div>
-    <div
-      *ngIf="showButton === 'card' || state.price!.total < affirmMinimumAmount"
-      [ngClass]="{
+    <div *ngIf="showButton === 'card' || state.price!.total < affirmMinimumAmount" [ngClass]="{
         show_form:
           showButton === 'card' || state.price!.total < affirmMinimumAmount
-      }"
-    >
+      }">
       <div>
         <div>
           <label>Name on Card</label>
-          <input
-            name="ccName"
-            type="text"
-            [(ngModel)]="cardData.name"
-            [required]="true"
-          />
-          <div
-            *ngIf="
+          <input name="ccName" type="text" [(ngModel)]="name" [required]="true" />
+          <div *ngIf="
               form.form.controls['ccName'] &&
               form.form.controls['ccName'].errors &&
               form.form.controls['ccName'].touched
-            "
-            class="invalid-feedback"
-          >
+            " class="invalid-feedback">
             <mat-error>
               {{ "Name On Card is required" }}
             </mat-error>
@@ -297,23 +235,13 @@
       </div>
       <div>
         <div>Card Number</div>
-        <input
-          [maxlength]="23"
-          name="ccCardNumber"
-          type="tel"
-          [autocomplete]="false"
-          [(ngModel)]="cardData.cardNumber"
-          (ngModelChange)="validateCC(cardData.cardNumber)"
-          [required]="true"
-        />
-        <div
-          *ngIf="
+        <input [maxlength]="19" name="ccCardNumber" type="tel" [autocomplete]="false" [(ngModel)]="cardNumber"
+          (ngModelChange)="validateCC(cardNumber)" [required]="true" />
+        <div *ngIf="
             form.form.controls['ccCardNumber'] &&
             form.form.controls['ccCardNumber'].errors &&
             form.form.controls['ccCardNumber'].touched
-          "
-          class="invalid-feedback"
-        >
+          " class="invalid-feedback">
           <mat-error>
             {{ "Card Number is required" }}
           </mat-error>
@@ -321,81 +249,100 @@
       </div>
       <div>
         <div>Date</div>
-        <input
-          type="tel"
-          name="ccExpiration"
-          auto-slash
-          [maxlength]="5"
-          [autocomplete]="false"
-          pattern="/^(0[1-9]|1[012])[ -\/]\d\d$/"
-          [(ngModel)]="cardData.expiration"
-          [required]="true"
-        />
+        <input type="tel" name="ccExpiration" appAutoSlash [maxlength]="5" [autocomplete]="false"
+          pattern="^(0[1-9]|1[012])[ -\/]\d\d$" [(ngModel)]="expiration" [required]="true" />
+
         <div
-          *ngIf="
-            form.form.controls['ccExpiration'] &&
-            form.form.controls['ccExpiration'].errors &&
-            form.form.controls['ccExpiration'].touched
-          "
-          class="invalid-feedback"
-        >
-          <mat-error>
+          *ngIf="(form.form.controls['ccExpiration'] && form.form.controls['ccExpiration'].errors && form.form.controls['ccExpiration'].touched)"
+          class="invalid-feedback">
+          <mat-error *ngIf="form.form.controls['ccExpiration'].errors['required']">
             {{ "Expiration Date is required" }}
           </mat-error>
-        </div>
-        <div *ngIf="form.form.controls['ccExpiration'].errors?.['pattern']">
-          <mat-error>{{ "Invalid Format" }}</mat-error>
+          <mat-error *ngIf="form.form.controls['ccExpiration'].errors['pattern']">
+            <mat-error>{{ "Invalid Expiration Date" }}</mat-error>
+          </mat-error>
         </div>
       </div>
       <div>
         <div>CVV</div>
-        <input
-          name="ccCardCode"
-          type="password"
-          pattern="/^[0-9]{3,4}$/"
-          [maxLength]="4"
-          [autocomplete]="false"
-          [(ngModel)]="cardData.cardCode"
-          [required]="true"
-        />
+        <input name="ccCardCode" type="password" pattern="^[0-9]{3,4}$" [maxLength]="3" [autocomplete]="false"
+          [(ngModel)]="cardCode" [required]="true" />
+
         <div
-          *ngIf="
-            form.form.controls['ccCardCode'] &&
-            form.form.controls['ccCardCode'].errors &&
-            form.form.controls['ccCardCode'].touched
-          "
-          class="invalid-feedback"
-        >
-          <mat-error>
+          *ngIf="(form.form.controls['ccCardCode'] && form.form.controls['ccCardCode'].errors && form.form.controls['ccCardCode'].touched)"
+          class="invalid-feedback">
+          <mat-error *ngIf="form.form.controls['ccCardCode'].errors['required']">
             {{ "CVV is required" }}
           </mat-error>
-        </div>
-        <div *ngIf="form.form.controls['ccCardCode'].errors?.['pattern']">
-          <mat-error>{{ "Invalid CVV" }}</mat-error>
+          <mat-error *ngIf="form.form.controls['ccCardCode'].errors['pattern']">
+            <mat-error>{{ "Invalid CVV" }}</mat-error>
+          </mat-error>
         </div>
       </div>
       <div>
         <div>ZipCode</div>
-        <input
-          name="ccZip"
-          type="tel"
-          [autocomplete]="false"
-          [(ngModel)]="cardData.zip"
-          [required]="true"
-        />
-        <div
-          *ngIf="
+        <input name="ccZip" type="tel" [autocomplete]="false" [(ngModel)]="zip" [required]="true" />
+        <div *ngIf="
             form.form.controls['ccZip'] &&
             form.form.controls['ccZip'].errors &&
             form.form.controls['ccZip'].touched
-          "
-          class="invalid-feedback"
-        >
+          " class="invalid-feedback">
           <mat-error>
             {{ "ZipCode is required" }}
           </mat-error>
         </div>
       </div>
+    </div>
+
+    <div ng-if="state.price.total >= affirmMinimumAmount">
+      <input type="radio" id="customRadioInline2" (click)="selectCard('affirm')" name="customRadioInline1"
+        checked="checked" />
+      <label [ngClass]="{ active: showButton === 'affirm' }" for="customRadioInline2">
+        <b id="affirmMonthlyPayment" class="affirm-as-low-as" data-page-type="payment" data-learnmore-show="false"
+          data-amount="0"></b>
+      </label>
+    </div>
+  </div>
+
+
+
+  <div class="cus-payment-liability" ng-if="waivers.length > 0">
+    <div class="cus-payment-liability-p1">
+      <h4>Liability Waiver</h4>
+    </div>
+
+    <div class="cus-payment-liability-p2">
+      <div class="cus-payment-liability-p2-cont">
+        <h1>
+          <div [innerHTML]="getTrustedHtml(waivers[0].description)"></div>
+        </h1>
+      </div>
+    </div>
+
+
+    <div class="cus-payment-liability-p3">
+      <div class="cus-payment-liability-p3-s1">
+        <p>I agree to Ragnar Event’s Liability Waiver</p>
+      </div>
+      <div class="cus-payment-liability-p3-s2">
+        <input placeholder="Enter Your Initials" class="customInput" [autocomplete]=false name="liabilityWaiver"
+          [(ngModel)]="state.captain.waiverInitials" type="text" [required]="true" />
+
+
+        <div
+          *ngIf="(form.form.controls['liabilityWaiver'] && form.form.controls['liabilityWaiver'].errors && form.form.controls['liabilityWaiver'].touched)"
+          class="invalid-feedback">
+          <mat-error *ngIf="form.form.controls['liabilityWaiver'].errors['required']">
+            {{ "Your initials are required" }}
+          </mat-error>
+
+        </div>
+      </div>
+    </div>
+    <div class="cus-payment-liability-p4">
+      <p>By clicking ‘Complete Purchase’ you agree to Ragnar’s <a target="_blank"
+          href="https://www.runragnar.com/purchase-policy">Purchase Policy</a>.
+        Registrations are non-refundable.</p>
     </div>
   </div>
 </form>
