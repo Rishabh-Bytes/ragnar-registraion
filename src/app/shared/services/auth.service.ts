@@ -83,6 +83,53 @@ export class AuthService {
     return this.http.put(url_, content_).toPromise();
   }
 
+  updateUserInfo (registration: any)  {
+
+    return this.getUserById(registration.profilesId).then((user:any) => {
+        // let request = this.request({
+        //     url: '/updateUser',
+        //     data: user
+        // });
+     
+        user.dateOfBirth = registration.bornAt;
+        //user. = registration.email;
+        user.firstName = registration.firstName;
+        user.lastName = registration.lastName;
+        user.gender = registration.gender;
+        user.phone = registration.phone;
+        user.runPace = registration.pace;
+        user.shirtSize = registration.tShirtSize;
+        user.address = registration.address;
+        user.address2 = registration.address2;
+        user.country = registration.country;
+        user.city = registration.city;
+        user.state = registration.state;
+        user.zipCode = registration.zipCode;
+        const url = environment.profilesBaseUrl + '/updateUser';
+        let request = this.http.post(url,user).toPromise().then((user) => {
+          this.setUser(User.fromJS(user));
+      });
+
+
+        // return this.RequestService.post(request).then((user) => {
+        //     this.setUser(User.fromJS(user));
+        // });
+    });
+}
+
+getUserById (id: string) {
+  // let request = this.request({
+  //     url: '/getUser',
+  //     data: {
+  //         id: id
+  //     }
+  // });
+
+  // return this.RequestService.post(request);
+  const url = environment.registrationsBaseUrl + '/getUser';
+  return this.http.post(url,id).toPromise();
+}
+
   logout(): void {
 
   }

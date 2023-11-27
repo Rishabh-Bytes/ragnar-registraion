@@ -5,23 +5,30 @@ import * as moment from 'moment';
 import { AGE_OF_MAJORITY } from 'src/app/shared/constants/local-storage.const';
 import { IRegistrationCaptainState } from 'src/app/shared/helper/interface';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { ICardData } from 'src/app/shared/services/authorize-net.service';
+import { AuthorizeNetService } from 'src/app/shared/services/authorize-net.service';
 import {
   CountryService,
   ICountry,
   ICountryState,
 } from 'src/app/shared/services/country.service';
 import { CustomFieldsGroup } from 'src/app/shared/services/custom-field.service';
+import { DateService } from 'src/app/shared/services/date.service';
 import { GoogleAnalytics } from 'src/app/shared/services/google-analytics.service';
 import { PopUpService } from 'src/app/shared/services/pop-up.service';
 import {
+  IOPaqueData,
+  Order,
   OrderPrice,
   Payment,
+  PostAffirmOrder,
+  PreAffirmOrder,
   Registration,
   RegistrationConfigService,
 } from 'src/app/shared/services/registration-config.service';
+import { HTTP_UNPROCESSABLE_ENTITY } from 'src/app/shared/services/request.service';
 import { StateService } from 'src/app/shared/services/state.service';
 import { UtilsService } from 'src/app/shared/services/utils.service';
+declare let affirm:any;
 
 @Component({
   selector: 'app-payment',
@@ -45,7 +52,15 @@ export class PaymentComponent implements OnInit {
   svgMastercard: string;
   svgDiscover: string;
   waivers: CustomFieldsGroup[] | any;
-  cardData: ICardData;
+  cardData: any = {
+    name: '',
+    cardNumber: '',
+    month: '',
+    year: '',
+    cardCode: '',
+    zip: '',
+    expiration: ''
+  };
   name: string;
   cardNumber: string;
   month: string;
@@ -61,7 +76,9 @@ export class PaymentComponent implements OnInit {
     private popUpService: PopUpService,
     private CountryService: CountryService,
     private AuthService: AuthService,
-    private UtilsService: UtilsService
+    private UtilsService: UtilsService,
+    private DateService: DateService,
+    private AuthorizeNetService: AuthorizeNetService,
   ) {}
 
   ngOnInit() {
@@ -207,7 +224,7 @@ export class PaymentComponent implements OnInit {
           }
         }
         this.state.price = price;
-        // this.showButton = (price.total > this.affirmMinimumAmount) ? '' : 'card';
+        this.showButton = (price.total > this.affirmMinimumAmount) ? '' : 'card';
 
         setTimeout(() => {
           this.calculateAffirmCents(price.total);
@@ -481,4 +498,469 @@ export class PaymentComponent implements OnInit {
   selectCard(type: any) {
     this.showButton = type;
   }
+
+    generateTeamNameRandom(capFirstName: any, capLastName: any) {
+            return capFirstName.split(" ")[0] + ' ' + capLastName.split(" ")[0] + "'s Team";
+        }
+
+
+  affirmCheckoutProcess() {
+    this.showLoading = true;
+    if (!this.state.team.name) {
+        this.state.team.name = this.generateTeamNameRandom(this.state?.captain?.firstName, this.state.captain.lastName);
+    }
+    if (!this.state.team.registrationPeriod) {
+        this.state.team.registrationPeriod = this.state?.price?.stage;
+    }
+    if (this.state.promoCode) {
+        this.state.promoCode = this.state.promoCode.toUpperCase();
+    }
+    let order = PreAffirmOrder.fromJS({
+        captainData: _.cloneDeep(this.state.captain),
+        teamData: _.cloneDeep(this.state.team),
+        payment: Payment.fromJS({
+            eventType: this.state.team.type,
+            teamType: this.state.team.type,
+            couponCode: this.state.promoCode,
+            vipCode: this.state.vipCode,
+            token: '',
+            subTotalAmount: this.state?.price?.subTotal,
+            discountAmount: this.state?.price?.discounts,
+            serviceFeeAmount: this.state?.price?.fees,
+            taxAmount: this.state?.price?.taxes,
+            totalPrice: (this.state?.price?.subTotal ? this.state?.price?.subTotal : 0) + (this.state?.price?.fees? this.state?.price?.fees : 0) + (this.state?.price?.taxes? this.state?.price?.taxes : 0),
+            paidPrice: this.state?.price?.total,
+            stage: this.state?.price?.stage,
+            cardNumber: (this.cardData && this.cardData.cardNumber) ? this.cardData.cardNumber.slice(-4) : ''
+        })
+    });
+
+    this.GoogleAnalytics.sendingEcommersEventToGoogleAnalytics('ADD_PAYMENT_INFO', {
+        item_name: this.state.registrationConfig.name,
+        item_id: this.state.registrationConfig.id,
+        price: this.state.price?.total.toString(),
+        item_category: this.state.registrationConfig.type,
+        item_category2: '',
+        item_category3: '',
+        item_category4: '',
+        item_variant: (this.state.team.type === 'REGULAR') ? 'STANDARD' : this.state.team.type,
+        quantity: '1',
+    });
+
+    this.RegistrationConfigDataService.createPreAffirmOrder(this.state.regConfigId, order)
+        .then((data:any) => {
+            data.orderData.reason = null;
+            affirm.checkout({
+                "merchant": {
+                    "user_confirmation_url": "",
+                    "user_cancel_url": "",
+                    "user_confirmation_url_action": "POST",
+                    "name": "Ragnar"
+                },
+                "shipping": {
+                    "name": {
+                        "first": this.state.captain.firstName,
+                        "last": this.state.captain.lastName
+                    },
+                    "address": {
+                        "line1": this.state.captain.address,
+                        "city": this.state.captain.city,
+                        "state": this.state.captain.state,
+                        "zipcode": this.state.captain.zipCode,
+                        "country": this.state.captain.country
+
+                    },
+                    "phone_number": this.state.captain.phone,
+                    "email": this.state.captain.email
+                },
+                "billing": {
+                    "name": {
+                        "first": this.state.captain.firstName,
+                        "last": this.state.captain.lastName
+                    },
+                    "address": {
+                        "line1": this.state.captain.address,
+                        "city": this.state.captain.city,
+                        "state": this.state.captain.state,
+                        "zipcode": this.state.captain.zipCode,
+                        "country": this.state.captain.country
+
+                    },
+                    "phone_number": this.state.captain.phone,
+                    "email": this.state.captain.email
+                },
+                "items": [{
+                    "display_name": `${this.state.registrationConfig.raceYear} - ${this.state.registrationConfig.name} - ${this.state.team.type || ''} - Race Registration`,
+                    "sku": this.state.registrationConfig.id,
+                    "unit_price": Math.round((this.state?.price?.subTotal ? this.state?.price?.subTotal : 0) * 100),
+                    "qty": 1,
+                    "item_image_url": "",
+                    "item_url": "",
+                }],
+                "metadata": {
+                    "platform_type": "",
+                    "shipping_type": "",
+                    "mode": "modal",
+                },
+                "order_id": data.orderData.id,
+                "shipping_amount": 0,
+                "tax_amount": 0,
+                "total": Math.round(data.orderData.paidAmount * 100)
+            });
+
+            affirm.checkout.open({
+                onFail: (e:any) => {
+                    this.showLoading = false;
+                    data.orderData.reason = e.reason;
+                    let order = PostAffirmOrder.fromJS({
+                        orderData: data.orderData,
+                    });
+                    this.RegistrationConfigDataService.updatePostAffirmOrder(this.state.regConfigId, order)
+                },
+                onSuccess: (a:any) => {
+                    var formData = [];
+                    if (this.state?.registrationConfig?.funnel?.form) {
+                        if (this.state.registrationConfig.funnel.form.customFields) {
+                          const customFields = [...this.state.registrationConfig.funnel.form.customFields];
+                          for (let i in customFields) {
+                                formData.push({
+                                    "customKey": customFields[i].fieldLabel,
+                                    "customValue": customFields[i].answer || ''
+                                });
+                            }
+                        }
+                    }
+                    let order = PostAffirmOrder.fromJS({
+                        checkout_token: a.checkout_token,
+                        orderData: data.orderData,
+                        captainData: this.state.captain,
+                        teamData: this.state.team,
+                        formData: formData,
+                        payment: Payment.fromJS({
+                            eventType: this.state.team.type,
+                            teamType: this.state.team.type,
+                            couponCode: this.state.promoCode,
+                            vipCode: this.state.vipCode,
+                            token: '',
+                            subTotalAmount: this.state?.price?.subTotal,
+                            discountAmount: this.state?.price?.discounts,
+                            serviceFeeAmount: this.state?.price?.fees,
+                            taxAmount: this.state?.price?.taxes,
+                            totalPrice: (this.state?.price?.subTotal ? this.state?.price?.subTotal : 0) + (this.state?.price?.fees? this.state?.price?.fees : 0) + (this.state?.price?.taxes? this.state?.price?.taxes : 0),
+                            paidPrice: this.state?.price?.total,
+                            stage: this.state?.price?.stage,
+                            cardNumber: (this.cardData && this.cardData.cardNumber) ? this.cardData.cardNumber.slice(-4) : ''
+                        })
+                    });
+                    if (order?.captainData?.bornAt) {
+                        order.captainData.bornAt = this.DateService.getLocalISOTime(moment(order.captainData.bornAt).endOf('day').toDate());
+                    }
+                    this.RegistrationConfigDataService.updatePostAffirmOrder(this.state.regConfigId, order)
+                        .then((orderResponse) => {
+                            this.handleSuccessResponce(orderResponse, order);
+                        })
+                        .catch((error) => {
+                            this.showLoading = false;
+                            this.handleErrorResponce(error);
+                        })
+                }
+            });
+        })
+        .catch(() => {
+            this.showLoading = false;
+        })
+
+    affirm.ui.ready(
+        () => {
+            affirm.ui.error.on("close", () => {
+                this.showLoading = false;
+                // this.$rootScope.$apply();
+            });
+        }
+    );
+}
+
+handleSuccessResponce(orderResponse:any, order:any) {
+  this.state.order = orderResponse;
+  if (this.state?.price?.total){
+    this.state.price.total = orderResponse.paidAmount;
+  }
+  if (this.state.captain.bornAt) {
+      this.state.captain.bornAt = this.DateService.getLocalISOTime(moment(this.state.captain.bornAt).endOf('day').toDate());
+  }
+  this.AuthService.updateUserInfo(this.state.captain);
+
+  // this.GoogleAnalytics.sendingGoogleAnalyticsData('CHECKOUT_PAYMENT_DONE', {
+  //     id: this.state.regConfigId,
+  //     name: this.state.registrationConfig.name,
+  //     category: this.state.registrationConfig.type,
+  //     price: order.payment.subTotalAmount,
+  //     quantity: 1
+  // },
+  //     {
+  //         id: orderResponse.orderId,
+  //         affiliation: 'Ragnar',
+  //         revenue: order.payment.paidPrice,
+  //         tax: order.payment.taxAmount,
+  //         total_revenue: order.payment.paidPrice + order.payment.taxAmount,
+  //         coupon: order.payment.couponCode || '',
+  //         price: order.payment.subTotalAmount,
+  //         name: this.state.registrationConfig.name,
+  //         transactionId: orderResponse.transcationId
+  //     });
+
+  this.GoogleAnalytics.sendingEcommersEventToGoogleAnalytics('PURCHASE', {
+      item_name: this.state.registrationConfig.name,
+      item_id: this.state.registrationConfig.id,
+      price: this.state.price?.total.toString(),
+      item_category: this.state.registrationConfig.type,
+      item_category2: '',
+      item_category3: '',
+      item_category4: '',
+      item_variant: (this.state.team.type === 'REGULAR') ? 'STANDARD' : this.state.team.type,
+      quantity: '1',
+  },
+      {
+          currency: 'USD',
+          value: order.payment.paidPrice + order.payment.taxAmount,
+          tax: order.payment.taxAmount,
+          shipping: 0,
+          affiliation: 'Ragnar',
+          transaction_id: orderResponse.transcationId,
+          coupon: order.payment.couponCode || '',
+      });
+
+  // this.$state.go('team-builder.registration.captain.confirmation');
+
+  //need to add confirmation page routing
+
+  this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('FORM_SUBMIT', {
+      formName: 'captain_payment_card_info',
+      formStatus: 'success',
+  });
+
+  this.addExpertVoicePixelScript(order);
+  this.addNorthBeamConversionPixel(order);
+}
+
+handleErrorResponce(error:any) {
+  let code = 'unknown',
+      text = 'Unexpected error';
+
+  this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('FORM_SUBMIT', {
+      formName: 'captain_payment_card_info',
+      formStatus: 'failed',
+  })
+
+  this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('SITE_MESSAGE', {
+      messageType: 'Alert',
+      messageContent: error.errorMessage || ''
+  })
+
+  if (error.status === HTTP_UNPROCESSABLE_ENTITY) {
+      let response = JSON.parse(error.response);
+
+      if (response.errors && response.errors.error && response.errors.error[0]) {
+          code = 'T0' + response.errors.error[0].errorCode;
+          text = response.errors.error[0].errorText;
+      }
+
+      if (response.error && response.error[0]) {
+          code = 'T1' + response.error[0].errorCode;
+          text = response.error[0].errorText;
+      }
+
+      if (response.err) {
+          code = 'ALREADY REGISTERED';
+          text = response.err;
+      }
+
+      if (response.errorMessage) {
+          code = '422';
+          text = response.errorMessage;
+      }
+  }
+
+  // return this.$q.reject([{
+  //     code: code,
+  //     text: text
+  // }]);
+}
+
+addExpertVoicePixelScript(order:any) {
+  const purchaseDetails:any = this.state;
+  let script = document.createElement('script');
+  script.type = 'text/javascript';
+  // script.src = 'your_script_url_here';
+  script.innerHTML = `
+          var _exp = window._exp || [];
+          _exp.push({
+          pixelId: 'exp-681-132736', //Pixel ID provided by EV
+          orderId: '${purchaseDetails.order.orderId}',
+          orderDiscountCode: '${order.payment.couponCode || ''}',     // Discount code used on order, or discount group name. Used to identify commissionable orders.
+          orderDiscount: '${purchaseDetails.price.discounts}',
+          orderShipping: '${purchaseDetails.price.fees}',
+          orderSubtotal: '${purchaseDetails.price.subTotal}',     // Order subtotal. After discount is applied, before tax & shipping. Commission calculated from this.
+          orderTax: '${order.payment.taxAmount}',
+          orderCurrency: 'USD',
+          orderTotal: '${purchaseDetails.price.total}',
+          products: [
+              {id: '${this.state.registrationConfig.id}', // parent SKU - Should match product code in EV store file 
+              name: '${this.state.registrationConfig.name}',
+              sku: '${this.state.registrationConfig.id}', 
+              upc: '', 
+              msrp: '${this.state.price?.total.toString()}',
+              price: '${this.state.price?.total.toString()}', 
+              quantity: '1'},
+          ],
+          });
+          // **********     Invoking Pixel - Do not edit below this line.   **********
+
+          (function(w, d) {
+          function ls() {
+              var e = d.createElement('script');
+              e.src = 'https://plugins.experticity.com/oa/2/plugin.js';
+              d.body.appendChild(e);
+          }
+          if (w.attachEvent) {
+              w.attachEvent('onload', ls);
+          } else {
+              w.addEventListener('load', ls, false);
+          }
+          })(window, document);
+  `;
+  // angular.element(document.getElementsByTagName('head')[0]).append(script);
+}
+
+addNorthBeamConversionPixel(order:any){
+  const purchaseDetails:any = this.state;
+  let script = document.createElement('script');
+  script.type = 'text/javascript';
+  const data = {
+      id: purchaseDetails.order.orderId, // A unique identifier for the order that was placed. Must be unique among all orders.
+      totalPrice: purchaseDetails.price.total, // The total amount collected for the purchase.
+      shippingPrice: purchaseDetails.price.fees, // Shipping fees charged to the customer for this purchase.
+      taxPrice: order.payment.taxAmount, // Taxes charged to the customer for this purchase.
+      coupons: order.payment.couponCode || '', // A comma separated list of discount codes used.
+      currency: "USD", // A 3-character ISO currency code describing totalPrice, taxPrice, and shippingPrice.
+      customerId: purchaseDetails.captain.profilesId, // A unique identifier for the customer who made a purchase.
+      lineItems: [
+        {
+          productId: this.state.registrationConfig.id,
+          variantId: this.state.team.type,
+          productName: this.state.registrationConfig.name + "  " +this.state.registrationConfig.raceYear,
+          variantName: this.state.team.type,
+          price: order.payment.subTotalAmount,
+          quantity: 1,
+        }]
+    };
+  // window["Northbeam"].firePurchaseEvent(data)
+}
+
+next() {
+  let result;
+  if (this.state.price?.total === 0) {
+      result = this.postOrder();
+  } else {
+      result = this.AuthorizeNetService.authorize(this.cardData)
+      .then((opaqueData:any) => {
+          return this.postOrder(opaqueData);
+      });
+  }
+
+  return result.catch((error:any) => {
+      if (error[0].code == "E00117") {
+              this.popUpService.openSnackBar('Valid ZipCode Required')
+          this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('SITE_MESSAGE', {
+              messageType: 'Alert',
+              messageContent: 'Valid ZipCode Required'
+          })
+      } else if (error[0].code != "unknown") {
+              this.popUpService.openSnackBar(error[0].text)
+
+          this.GoogleAnalytics.sendingFormsEventToGoogleAnalytics('SITE_MESSAGE', {
+              messageType: 'Alert',
+              messageContent: error[0].text
+          })
+      }
+  });
+}
+
+postOrder(opaqueData?: IOPaqueData) {
+  // this.state.captain.state = this.state.captain.state.toUpperCase()
+  if (!this.state.team.name) {
+      this.state.team.name = this.generateTeamNameRandom(this.state.captain.firstName, this.state.captain.lastName);
+  }
+  if (!this.state.team.registrationPeriod) {
+      this.state.team.registrationPeriod = this.state.price?.stage;
+  }
+  if (this.state.promoCode) {
+      this.state.promoCode = this.state.promoCode.toUpperCase();
+  }
+
+  var formData = [];
+  if (this.state.registrationConfig.funnel?.form) {
+      if (this.state.registrationConfig.funnel.form.customFields) {
+          // var customFields = angular.copy(this.state.registrationConfig.funnel.form.customFields);
+          const customFields = [...this.state.registrationConfig.funnel.form.customFields];
+
+          for (let i in customFields) {
+              formData.push({
+                  "customKey": customFields[i].fieldLabel,
+                  "customValue": customFields[i].answer || ''
+              });
+          }
+      }
+  }
+  let order = Order.fromJS({
+      teamData: this.state.team,
+      captainData: this.state.captain,
+      formData: formData,
+      payment: Payment.fromJS({
+        eventType: this.state.team.type,
+        teamType: this.state.team.type,
+        couponCode: this.state.promoCode,
+        vipCode: this.state.vipCode,
+        token: opaqueData,
+        subTotalAmount: this.state?.price?.subTotal,
+        discountAmount: this.state?.price?.discounts,
+        serviceFeeAmount: this.state?.price?.fees,
+        taxAmount: this.state?.price?.taxes,
+        totalPrice: (this.state?.price?.subTotal ? this.state?.price?.subTotal : 0) + (this.state?.price?.fees? this.state?.price?.fees : 0) + (this.state?.price?.taxes? this.state?.price?.taxes : 0),
+        paidPrice: this.state?.price?.total,
+        stage: this.state?.price?.stage,
+        cardNumber: (this.cardData && this.cardData.cardNumber) ? this.cardData.cardNumber.slice(-4) : ''
+    })
+  });
+
+  if (order.captainData.bornAt) {
+      order.captainData.bornAt = this.DateService.getLocalISOTime(moment(order.captainData.bornAt).endOf('day').toDate());
+  }
+
+  return this.RegistrationConfigDataService.postOrder(this.state.regConfigId, order).then((orderResponse:any) => {
+      this.GoogleAnalytics.sendingEcommersEventToGoogleAnalytics('ADD_PAYMENT_INFO', {
+          item_name: this.state.registrationConfig.name,
+          item_id: this.state.registrationConfig.id,
+          price: this.state.price?.total.toString(),
+          item_category: this.state.registrationConfig.type,
+          item_category2: '',
+          item_category3: '',
+          item_category4: '',
+          item_variant: (this.state.team.type === 'REGULAR') ? 'STANDARD' : this.state.team.type,
+          quantity: '1',
+      }, {
+          currency: 'USD',
+          value: +(order.payment.paidPrice + order.payment.taxAmount),
+          tax: +(order.payment.taxAmount ? order.payment.taxAmount : 0),
+          shipping: 0,
+          affiliation: 'Ragnar',
+          transaction_id: orderResponse.transcationId,
+          coupon: order.payment.couponCode || '',
+      });
+      this.handleSuccessResponce(orderResponse, order);
+  }).catch((error) => {
+      this.handleErrorResponce(error);
+  });
+}
+
 }

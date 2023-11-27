@@ -74,6 +74,43 @@ export class Team {
         return result;
     }
 
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["runnersMax"] = this.runnersMax;
+        data["volunteersMax"] = this.volunteersMax;
+        data["classification"] = this.classification ? this.classification : undefined;
+        data["division"] = this.division ? this.division : undefined;
+        data["org"] = this.org;
+        data["id"] = this.id;
+        data["registrationConfigId"] = this.registrationConfigId;
+        data["name"] = this.name;
+        data["role"] = this.role;
+        data["type"] = this.type;
+        data["captainId"] = this.captainId;
+        data["volunteersCount"] = this.volunteersCount;
+        data["runnersCount"] = this.runnersCount;
+        data["teamInviteUrl"] = this.teamInviteUrl;
+        data["startTime"] = this.startTime;
+        if (this.customAttributes && this.customAttributes.constructor === Array) {
+            data["customAttributes"] = [];
+            for (let item of this.customAttributes)
+                data["customAttributes"].push(item.toJSON());
+        }
+        data["teamPace"] = this.teamPace;
+        data["createdAt"] = this.createdAt;
+        data["glampingPurchasedDate"] = this.glampingPurchasedDate
+        data["isGlampingPurchased"] = this.isGlampingPurchased
+        data["updatedAt"] = this.updatedAt;
+        data["exemptions"] = this.exemptions;
+        data["paidExemptions"] = this.paidExemptions;
+        data["charity"] = this.charity;
+        data["vanNumber"] = this.vanNumber;
+        data["notes"] = this.notes;
+        data["teamNumber"] = this.teamNumber;
+        data["registrationPeriod"] = this.registrationPeriod;
+        return data;
+    }
+
 }
 
 export class CustomAttribute {
@@ -113,6 +150,27 @@ export class CustomAttribute {
         let result = new CustomAttribute();
         result.init(data);
         return result;
+    }
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["resource"] = this.resource;
+        data["type"] = this.type;
+        data["fieldType"] = this.fieldType;
+        data["fieldStyle"] = this.fieldStyle;
+        data["fieldRequired"] = this.fieldRequired;
+        data["fieldLabel"] = this.fieldLabel;
+        if (this.groups && this.groups.constructor === Array) {
+            data["groups"] = [];
+            for (let item of this.groups)
+                data["groups"].push(item);
+        }
+        if (this.options && this.options.constructor === Array) {
+            data["options"] = [];
+            for (let item of this.options)
+                data["options"].push(item.toJSON());
+        }
+        return data;
     }
 }
 

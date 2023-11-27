@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { PATTERNS, ROUTES } from 'src/app/shared/constants';
+import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { GoogleAnalytics } from 'src/app/shared/services/google-analytics.service';
 export type EventType = 'ROAD' | 'TRAIL' | 'SPRINT' | 'SUNSET' | 'TRAIL_SPRINT';
@@ -65,8 +66,9 @@ export class LoginComponent implements OnInit {
           email: email,
         });
         // let params = this.AuthService.getRedirectParams();
+        
         localStorage.setItem('jwtToken-user', user.jwtToken);
-        this.authService.setUser(user);
+        this.authService.setUser({...user, email: user.emailAddress});
         const redirectUrl = 'team-builder/'+this.eventId + '/registration/' +  this.loginType 
         
             this.router.navigate([redirectUrl]);

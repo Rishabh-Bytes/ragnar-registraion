@@ -79,11 +79,11 @@ export class InfoComponent implements OnInit {
       'United Stated',
       'U.S',
     ];
-    let replce_to_USA = iscountryFoundinDynamo.indexOf(this.member.country);
+    // let replce_to_USA = iscountryFoundinDynamo.indexOf(this.member.country);
 
-    if (replce_to_USA > -1) {
-      this.member.country = 'USA';
-    }
+    // if (replce_to_USA > -1) {
+    //   this.member.country = 'USA';
+    // }
     this.allPaceValue = this.DefaultPaceService.getPaces();
 
     if (this.state.registrationConfig.type === 'ROAD') {
@@ -150,7 +150,7 @@ export class InfoComponent implements OnInit {
     if (!this.state.team.type) {
       this.popUpService.openSnackBar('Please select team type');
     }
-
+    debugger
     return this.getPrice()
       .then((price: any) => {
         this.state.price = price;

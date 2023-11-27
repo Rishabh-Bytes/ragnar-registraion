@@ -1,3 +1,5 @@
+import { Registration } from "../services/registration-config.service"
+
 export interface IRegistrationCaptainState {
     user: User
     regConfigId: string
@@ -90,48 +92,6 @@ export interface RegistrationFunnel {
     confirmation: any;
     waiver: any[];
     form: any;
-}
-
-export interface Registration {
-    org?: string | undefined;
-    id?: string | undefined;
-    registrationConfigId: string;
-    name: string;
-    role?: string | undefined;
-    email?: string | undefined;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
-    bornAt?: string | undefined;
-    gender?: string | undefined;
-    phone?: any; 
-    country?: string | undefined;
-    address?: string | undefined;
-    address2?: string | undefined;
-    city?: string | undefined;
-    state?: string | undefined;     
-    zipCode?: number | undefined;
-    type: string;
-    customAttributes?: any;
-    createdAt?: string | undefined;
-    updatedAt?: string | undefined;
-    teamId?: string | null;
-    teamName?: string | null;
-    groupVolunteerId?: string | null;
-    groupVolunteerName?: string | null;
-    shifts?: Array<string> | null; /* For Group Volunteer Bulk Registration */
-    order?: number | null;
-    pace?: number | null;
-    job?: Job | null;
-    shift?: Shift | null;
-    extraFees?: boolean | null;
-    waiversSigned?: boolean | null;
-    waiverInitials?: string | null;
-    shiftConfirmed?: boolean | null;
-    profilesId?: string | null;
-    tShirtSize?: string | null;
-    waiversSnapshot?: string | null;
-    formData?: any;
-    isAdmin?: boolean
 }
 
 export interface Job {

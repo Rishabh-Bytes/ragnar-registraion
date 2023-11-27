@@ -69,7 +69,7 @@ export class SignupComponent implements OnInit {
       return this.AuthService.login(this.signupForm.value, userType).subscribe((user: any) => {
         const params = sessionStorage.getItem('redirect-params');
         localStorage.setItem('jwtToken-user', user.jwtToken);
-        this.AuthService.setUser(user);
+        this.AuthService.setUser({...user, email: user.emailAddress});
         this.AuthService.updateProfileId(user.emailAddress, user.id).then((isUpdated: any) => {
         });
         const redirectUrl = 'team-builder/'+this.eventId + '/registration/' +  this.loginType

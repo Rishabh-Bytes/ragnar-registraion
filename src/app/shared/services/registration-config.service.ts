@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment.staging';
 import { Injectable } from '@angular/core';
-import { CustomAttribute } from './team.service';
+import { CustomAttribute, Team } from './team.service';
 
 @Injectable({
   providedIn: 'root',
@@ -128,6 +128,60 @@ export class RegistrationConfigService {
     const content_ = '';
     return this.http.get(url_).toPromise();
   }
+
+  /**
+         * Create a Affirm Pre Order
+         * @id registration config id
+         * @body order data
+         * @return SUCCESS
+         */
+  createPreAffirmOrder(registrationConfigId: string, body: PreAffirmOrder) {
+    let url_ = environment.registrationsConfigBaseUrl + "/{registrationConfigId}/orders/affirm/pre";
+    url_ = url_.replace("{registrationConfigId}", encodeURIComponent("" + registrationConfigId));
+    url_ = url_.replace(/[?&]$/, "");
+
+    // const content = body ? body.toJSON() : null;
+    // const content_ = JSON.stringify(content);
+
+    return this.http.post(url_, body).toPromise();
+  
+}
+
+/**
+         * Create a Affirm Post Order
+         * @id registration config id
+         * @body order data
+         * @return SUCCESS
+         */
+updatePostAffirmOrder(registrationConfigId: string, body: PostAffirmOrder){
+  let url_ = environment.registrationsConfigBaseUrl + "/{registrationConfigId}/orders/affirm/post";
+  url_ = url_.replace("{registrationConfigId}", encodeURIComponent("" + registrationConfigId));
+  url_ = url_.replace(/[?&]$/, "");
+
+  const content = body ? body.toJSON() : null;
+  const content_ = JSON.stringify(content);
+
+  return this.http.put(url_, body).toPromise();
+  
+}
+
+/**
+         * Create a new order
+         * @regConfId registration config id
+         * @body time data
+         * @return SUCCESS
+         */
+postOrder(regConfId: string, body: Order) {
+  let url_ = environment.registrationsConfigBaseUrl + "/{regConfId}/orders";
+  if (regConfId === undefined || regConfId === null)
+      throw new Error("The parameter 'regConfId' must be defined.");
+  url_ = url_.replace("{regConfId}", encodeURIComponent("" + regConfId));
+  url_ = url_.replace(/[?&]$/, "");
+
+  const content_ = JSON.stringify(body);
+
+  return this.http.post(url_, content_).toPromise();
+}
 }
 
 export class Payment {
@@ -138,8 +192,8 @@ export class Payment {
   couponCode: string;
   vipCode?: string | undefined;
   token: IOPaqueData;
-  totalPrice: string | undefined;
-  paidPrice: string | undefined;
+  totalPrice: any;
+  paidPrice: any;
   stage: string | undefined;
   subTotalAmount: string | undefined;
   taxAmount: string | undefined;
@@ -246,8 +300,8 @@ export class Registration {
       this.registrationConfigId = data['registrationConfigId'];
       this.name = data['name'];
       this.role = data['role'];
-      this.email = data['email'];
-      this.firstName = data['firstName'];
+      this.email = data["email"] || data["emailAddress"];
+       this.firstName = data['firstName'];
       this.lastName = data['lastName'];
       this.bornAt = data['bornAt'];
       this.gender = data['gender'];
@@ -305,6 +359,56 @@ export class Registration {
     result.init(data);
     return result;
   }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data["org"] = this.org;
+    data["id"] = this.id;
+    data["registrationConfigId"] = this.registrationConfigId;
+    data["name"] = this.name;
+    data["role"] = this.role;
+    data["email"] = this.email;
+    data["firstName"] = this.firstName;
+    data["lastName"] = this.lastName;
+    data["bornAt"] = this.bornAt;
+    data["gender"] = this.gender;
+    data["phone"] = this.phone;
+    data["country"] = this.country;
+    data["address"] = this.address;
+    data["address2"] = this.address2;
+    data["city"] = this.city;
+    data["state"] = this.state;
+    data["zipCode"] = this.zipCode;
+    data["type"] = this.type;
+    if (this.customAttributes && this.customAttributes.constructor === Array) {
+        data["customAttributes"] = [];
+        for (let item of this.customAttributes)
+            data["customAttributes"].push(item.toJSON());
+    }
+    data["createdAt"] = this.createdAt;
+    data["updatedAt"] = this.updatedAt;
+    data["teamId"] = this.teamId;
+    data["teamName"] = this.teamName;
+    data["groupVolunteerName"] = this.groupVolunteerName;
+    data["groupVolunteerId"] = this.groupVolunteerId;
+    data["shifts"] = this.shifts;
+    data["order"] = this.order;
+    data["pace"] = this.pace;
+    data["job"] = this.job;
+    data["shift"] = this.shift;
+    data["extraFees"] = this.extraFees === undefined ? undefined : (this.extraFees ? 1 : 0);
+    data["waiversSigned"] = this.waiversSigned === undefined ? undefined : (this.waiversSigned ? 1 : 0);
+    // data["shiftConfirmed"] = this.shiftConfirmed === undefined ? undefined : (this.shiftConfirmed ? 1 : 0);
+    data["profilesId"] = this.profilesId;
+    data["tShirtSize"] = this.tShirtSize;
+    data["waiversSnapshot"] = this.waiversSnapshot;
+    data["formData"] = this.formData;
+    data["waiverInitials"] = this.waiverInitials;
+    data["shiftId"] = (this.shift && this.shift.id) ? this.shift.id : undefined;
+    data["shiftConfirmed"] = (data["shiftId"]) ? 1 : 0;
+    data['isAdmin'] = this['isAdmin'] || false;
+    return data;
+}
 }
 
 export class Job {
@@ -379,3 +483,220 @@ export class OrderPrice {
   unitPrice?: number;
   stage?: string;
 }
+
+export class PreAffirmOrder {
+  orderData?: AffirmOrder = new AffirmOrder();
+  teamData: Team = new Team();
+  captainData: Registration = new Registration();
+  payment: Payment = new Payment();
+
+  init(data?: any) {
+      if (data) {
+          this.orderData = data["orderData"] ? AffirmOrder.fromJS(data["orderData"]) : new AffirmOrder();
+          this.teamData = data["teamData"] ? Team.fromJS(data["teamData"]) : new Team();
+          this.captainData = data["captainData"] ? Registration.fromJS(data["captainData"]) : new Registration();
+          this.payment = data["payment"] ? Payment.fromJS(data["payment"]) : new Payment();
+      }
+  }
+
+  static fromJS(data: any): PreAffirmOrder {
+      let result = new PreAffirmOrder();
+      result.init(data);
+      return result;
+  }
+
+  toJSON(data?: any) {
+      data = typeof data === 'object' ? data : {};
+      data["orderData"] = this.orderData ? this.orderData.toJSON() : <any>undefined;
+      data["teamData"] = this.teamData ? this.teamData.toJSON() : <any>undefined;
+      data["captainData"] = this.captainData ? this.captainData.toJSON() : <any>undefined;
+      data["payment"] = this.payment ? this.payment.toJSON() : <any>undefined;
+
+      if (data["teamData"] && data["teamData"].division && data["teamData"].division.name) {
+          data["teamData"].division = data["teamData"].division.name;
+      }
+
+      if (data["teamData"] && data["teamData"].classification && data["teamData"].classification.name) {
+          data["teamData"].classification = data["teamData"].classification.name;
+      }
+
+      return data;
+  }
+}
+
+export class PostAffirmOrder {
+  orderData: AffirmOrder = new AffirmOrder();
+  teamData?: Team = new Team();
+  captainData?: Registration = new Registration();
+  payment?: Payment = new Payment();
+  formData?: any;
+  checkout_token: string | null;
+  init(data?: any) {
+      if (data) {
+          this.orderData = data["orderData"] ? AffirmOrder.fromJS(data["orderData"]) : new AffirmOrder();
+          this.teamData = data["teamData"] ? Team.fromJS(data["teamData"]) : new Team();
+          this.captainData = data["captainData"] ? Registration.fromJS(data["captainData"]) : new Registration();
+          this.payment = data["payment"] ? Payment.fromJS(data["payment"]) : new Payment();
+          this.formData = data["formData"] ? data["formData"] : [];
+          this.checkout_token = data["checkout_token"];
+      }
+  }
+
+  static fromJS(data: any): PostAffirmOrder {
+      let result = new PostAffirmOrder();
+      result.init(data);
+      return result;
+  }
+
+  toJSON(data?: any) {
+      data = typeof data === 'object' ? data : {};
+      data["orderData"] = this.orderData ? this.orderData.toJSON() : <any>undefined;
+      data["teamData"] = this.teamData ? this.teamData.toJSON() : <any>undefined;
+      data["captainData"] = this.captainData ? this.captainData.toJSON() : <any>undefined;
+      data["payment"] = this.payment ? this.payment.toJSON() : <any>undefined;
+      data["formData"] = this.formData ? this.formData : <any>undefined;
+      data["checkout_token"] = this.checkout_token;
+      if (data["teamData"] && data["teamData"].division && data["teamData"].division.name) {
+          data["teamData"].division = data["teamData"].division.name;
+      }
+
+      if (data["teamData"] && data["teamData"].classification && data["teamData"].classification.name) {
+          data["teamData"].classification = data["teamData"].classification.name;
+      }
+
+      return data;
+  }
+}
+
+class AffirmOrder {
+  id?: string | undefined;
+  org?: string | undefined;
+  paidAmount?: number | undefined;
+  registrationConfigId?: string | undefined;
+  profileId?: string | undefined;
+  actualAmount?: number | undefined;
+  registrationStage?: string | undefined;
+  subTotalAmount?: number | undefined;
+  taxAmount?: number | null;
+  serviceFeeAmount?: number | undefined;
+  discountAmount?: number | undefined;
+  reason?: string | undefined;
+  orderId? : string | undefined;
+  init(data?: any) {
+      if (data) {
+          this.id = data["id"];
+          this.org = data["org"];
+          this.paidAmount = data["paidAmount"];
+          this.registrationConfigId = data["registrationConfigId"];
+          this.profileId = data["profileId"];
+          this.actualAmount = data["actualAmount"];
+          this.subTotalAmount = data["subTotalAmount"];
+          this.taxAmount = data["taxAmount"];
+          this.serviceFeeAmount = data["serviceFeeAmount"];
+          this.registrationStage = data["registrationStage"];
+          this.discountAmount = data["discountAmount"];
+          this.reason = data["reason"];
+          this.orderId = data["orderId"];
+      }
+  }
+
+  static fromJS(data: any): AffirmOrder {
+      let result = new AffirmOrder();
+      result.init(data);
+      return result;
+  }
+
+  toJSON(data?: any) {
+      data = typeof data === 'object' ? data : {};
+      data["id"] = this.id;
+      data["org"] = this.org;
+      data["paidAmount"] = this.paidAmount;
+      data["registrationConfigId"] = this.registrationConfigId
+      data["profileId"] = this.profileId;
+      data["actualAmount"] = this.actualAmount;
+      data["subTotalAmount"] = this.subTotalAmount;
+      data["taxAmount"] = this.taxAmount;
+      data["serviceFeeAmount"] = this.serviceFeeAmount;
+      data["registrationStage"] = this.registrationStage;
+      data["discountAmount"] = this.discountAmount;
+      data["reason"] = this.reason;
+      data["orderId"] = this.orderId;
+      return data;
+  }
+}
+  export class Order {
+    id?: string | undefined;
+    org?: string | undefined;
+    teamData: Team = new Team();
+    captainData: Registration = new Registration();
+    payment: Payment = new Payment();
+    formData?: any;
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.org = data["org"];
+            this.teamData = data["teamData"] ? Team.fromJS(data["teamData"]) : new Team();
+            this.captainData = data["captainData"] ? Registration.fromJS(data["captainData"]) : new Registration();
+            this.payment = data["payment"] ? Payment.fromJS(data["payment"]) : new Payment();
+            this.formData = data["formData"] ? data["formData"] : [];
+        }
+    }
+
+    static fromJS(data: any): Order {
+        let result = new Order();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["org"] = this.org;
+        data["teamData"] = this.teamData ? this.teamData.toJSON() : <any>undefined;
+        data["captainData"] = this.captainData ? this.captainData.toJSON() : <any>undefined;
+        data["payment"] = this.payment ? this.payment.toJSON() : <any>undefined;
+        data["formData"] = this.formData ? this.formData : <any>undefined;
+
+        if (data["teamData"] && data["teamData"].division && data["teamData"].division.name) {
+            data["teamData"].division = data["teamData"].division.name;
+        }
+
+        if (data["teamData"] && data["teamData"].classification && data["teamData"].classification.name) {
+            data["teamData"].classification = data["teamData"].classification.name;
+        }
+
+        return data;
+    }
+}
+
+export class CreateOrderResponse {
+    orderId: string;
+    message?: string | undefined;
+    paidAmount?: number | 0;
+    transcationId?: string | '';
+    init(data?: any) {
+        if (data) {
+            this.orderId = data["orderId"];
+            this.message = data["message"];
+            this.paidAmount = data["paidAmount"];
+            this.transcationId = data["transcationId"]
+        }
+    }
+
+    static fromJS(data: any): CreateOrderResponse {
+        let result = new CreateOrderResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["orderId"] = this.orderId;
+        data["message"] = this.message;
+        data["transcationId"] = this.transcationId;
+        return data;
+    }
+}
+
+

@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefaultPaceService } from './shared/services/defaultpace.service';
 import { CategoryService } from './shared/services/category.service';
 import { MatSelectModule } from '@angular/material/select';
+import { AuthorizeNetService } from './shared/services/authorize-net.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
     CustomFieldDataService,
     DefaultPaceService,
     CategoryService,
+    AuthorizeNetService
   ],
   bootstrap: [AppComponent],
 })

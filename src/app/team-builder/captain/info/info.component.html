@@ -6,9 +6,9 @@
       </div>
       <div class="regis-forms-ci-main-box">
         <div class="regis-forms-ci-left">
-          <app-form [members]="member" [state]="state"></app-form>
+          <app-form [members]="state.captain" [state]="state"></app-form>
           <div class="regis-forms-ci-Consent" *ngFor="
-      let customField of state.registrationConfig.funnel?.form.customFields
+      let customField of state?.registrationConfig?.funnel?.form.customFields
     ">
             <div class="md-input label md-label" style="text-transform: capitalize; height: inherit">
               {{ customField.fieldLabel | lowercase }}

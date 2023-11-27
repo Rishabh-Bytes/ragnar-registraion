@@ -221,7 +221,7 @@
       <div>
         <div>
           <label>Name on Card</label>
-          <input name="ccName" type="text" [(ngModel)]="name" [required]="true" />
+          <input name="ccName" type="text" [(ngModel)]="cardData.name" [required]="true" />
           <div *ngIf="
               form.form.controls['ccName'] &&
               form.form.controls['ccName'].errors &&
@@ -235,7 +235,7 @@
       </div>
       <div>
         <div>Card Number</div>
-        <input [maxlength]="19" name="ccCardNumber" type="tel" [autocomplete]="false" [(ngModel)]="cardNumber"
+        <input [maxlength]="19" name="ccCardNumber" type="tel" [autocomplete]="false" [(ngModel)]="cardData.cardNumber"
           (ngModelChange)="validateCC(cardNumber)" [required]="true" />
         <div *ngIf="
             form.form.controls['ccCardNumber'] &&
@@ -250,7 +250,7 @@
       <div>
         <div>Date</div>
         <input type="tel" name="ccExpiration" appAutoSlash [maxlength]="5" [autocomplete]="false"
-          pattern="^(0[1-9]|1[012])[ -\/]\d\d$" [(ngModel)]="expiration" [required]="true" />
+          pattern="^(0[1-9]|1[012])[ -\/]\d\d$" [(ngModel)]="cardData.expiration" [required]="true" />
 
         <div
           *ngIf="(form.form.controls['ccExpiration'] && form.form.controls['ccExpiration'].errors && form.form.controls['ccExpiration'].touched)"
@@ -266,7 +266,7 @@
       <div>
         <div>CVV</div>
         <input name="ccCardCode" type="password" pattern="^[0-9]{3,4}$" [maxLength]="3" [autocomplete]="false"
-          [(ngModel)]="cardCode" [required]="true" />
+          [(ngModel)]="cardData.cardCode" [required]="true" />
 
         <div
           *ngIf="(form.form.controls['ccCardCode'] && form.form.controls['ccCardCode'].errors && form.form.controls['ccCardCode'].touched)"
@@ -281,7 +281,7 @@
       </div>
       <div>
         <div>ZipCode</div>
-        <input name="ccZip" type="tel" [autocomplete]="false" [(ngModel)]="zip" [required]="true" />
+        <input name="ccZip" type="tel" [autocomplete]="false" [(ngModel)]="cardData.zip" [required]="true" />
         <div *ngIf="
             form.form.controls['ccZip'] &&
             form.form.controls['ccZip'].errors &&
@@ -345,4 +345,16 @@
         Registrations are non-refundable.</p>
     </div>
   </div>
+
+  <div class="send-button cus-purchase">
+    <button class="md-accent md-raised m-back">Back</button>
+    <button class="md-accent md-raised" id="submitInfo" validate
+        (click)="next()" async-silent>Complete Purchase</button>
+    <button class="md-accent md-raised" [disabled]="!showButton"
+        *ngIf="showButton === 'affirm' && !showLoading" id="submitInfo" validate
+        (click)="affirmCheckoutProcess()" async-silent>Complete Purchase</button>
+    <!-- <div flex="10" layout="row" style="align-self: center;" layout-align="center center" ng-if="showLoading">
+        <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+    </div> -->
+</div>
 </form>

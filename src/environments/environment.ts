@@ -1,7 +1,3 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
   // RAGNAR_API: 'https://api.runragnar.com', /* CMS v1 */
@@ -33,6 +29,7 @@ export const environment = {
     clientKey:
       '97gntGyYaD37896TFRgm623wfQ7JgcgqU8euETHHrE4wY2SFsfqZWm9W5B9j7we8',
     apiLoginID: '68W5nXmttLh',
+    URL: 'https://jstest.authorize.net/v1/Accept.js',
   },
   profilesBaseUrl:
     'https://zvoj73jyy4.execute-api.us-west-2.amazonaws.com/staging',
@@ -47,13 +44,8 @@ export const environment = {
   hubUserBaseUrl:
     'https://s3-us-west-2.amazonaws.com/ragnar-hub-ui-v2/index.html',
   domesticBaseUrl: 'https://dev.runragnar.com/teamcenter',
+  AFFIRM_CONFIG: {
+    public_api_key: '06I5BBH3EKH3YNWG',
+    script: 'https://cdn1-sandbox.affirm.com/js/v2/affirm.js',
+  },
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

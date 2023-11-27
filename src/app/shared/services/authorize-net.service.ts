@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
+
+declare let Accept:any;
 
 export interface ICardData {
-  name: string;
   cardNumber: string;
   month: string;
   year: string;
@@ -31,26 +32,17 @@ interface IAuthData {
   apiLoginID?: string;
 }
 
-export interface IAuthorizeNetService {
-  authorize(cardData: ICardData): Promise<IOPaqueData>;
-}
-
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthorizeNetService {
-  Accept: any;
-  /* @ngInject */
   constructor() {}
 
   authorize(cardData: ICardData) {
-    let exp = cardData.expiration.split('/');
+    const exp = cardData.expiration.split('/');
     cardData.month = exp[0];
     cardData.year = exp[1];
 
-    let secureData: ISecureData = {},
-      authData: IAuthData = {};
-    // deferred = this.$q.defer<IOPaqueData>();
+    const secureData: ISecureData = {};
+    const authData: IAuthData = {};
 
     // Extract the card number, expiration date, and card code.
     secureData.cardData = cardData;
@@ -61,26 +53,23 @@ export class AuthorizeNetService {
     authData.clientKey = environment.authorizeNet.clientKey;
     authData.apiLoginID = environment.authorizeNet.apiLoginID;
     secureData.authData = authData;
-    secureData.cardData.cardNumber = secureData.cardData.cardNumber.replace(
-      / /g,
-      ''
-    );
+    secureData.cardData.cardNumber = secureData.cardData.cardNumber.replace(/ /g, '');
     // Pass the card number and expiration date to Accept.js for submission to Authorize.Net.
-    this.Accept.dispatchData(secureData, (response: any) => {
-      // Process the response from Authorize.Net to retrieve the two elements of the payment nonce.
-      // If the data looks correct, record the OpaqueData to the console and call the transaction processing function.
-      if (response.messages.resultCode === 'Error') {
-        // deferred.reject(response.messages.message);
-        /*
+    return new Promise((resolve, reject) => {
+      Accept.dispatchData(secureData, (response:any) => {
+        console.log('🚀 ~ file: authorize-net.service.ts:60 ~ AuthorizeNetService ~ Accept.dispatchData ~ response:', response);
+        // Process the response from Authorize.Net to retrieve the two elements of the payment nonce.
+        // If the data looks correct, record the OpaqueData to the console and call the transaction processing function.
+        if (response.messages.resultCode === 'Error') {
+          reject(response.messages.message);
+          /*
                     for (var i = 0; i < response.messages.message.length; i++) {
-                        console.log(response.messages.message[i].code + ": " + response.messages.message[i].text);
                     }
                     */
-      } else {
-        // deferred.resolve(response.opaqueData);
-      }
+        } else {
+          resolve(response.opaqueData);
+        }
+      });
     });
-
-    // return deferred.promise;
   }
 }
