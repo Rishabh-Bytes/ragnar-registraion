@@ -4,6 +4,7 @@ import { CaptainComponent } from './captain.component';
 import { InfoComponent } from './info/info.component';
 import { AuthGuard } from 'src/app/auth/gaurd/auth.guard';
 import { PaymentComponent } from './payment/payment.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'payment',
         component: PaymentComponent,
+      },
+      {
+        path: 'confirmation',
+        component: ConfirmationComponent,
       },
       { path: '', redirectTo: 'info', pathMatch: 'full' },
     ],

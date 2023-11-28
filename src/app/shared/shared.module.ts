@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MoneyPipe } from './pipe/money.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { AutoSlashDirective } from './Directives/auto-slash.directive';
+import { DateFormatPipe } from './pipe/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AutoSlashDirective } from './Directives/auto-slash.directive';
     FormComponent,
     StepperComponent,
     MoneyPipe,
-    AutoSlashDirective
+    AutoSlashDirective,
+    DateFormatPipe,
   ],
   imports: [
     CommonModule,
@@ -46,6 +48,6 @@ import { AutoSlashDirective } from './Directives/auto-slash.directive';
     MatDatepickerModule,
     HttpClientModule,
   ],
-  exports: [FormComponent, MoneyPipe,AutoSlashDirective],
+  exports: [FormComponent, MoneyPipe, AutoSlashDirective, DateFormatPipe],
 })
 export class SharedModule {}

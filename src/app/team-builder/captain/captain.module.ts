@@ -8,9 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { PaymentComponent } from './payment/payment.component';
 import { MatSelectModule } from '@angular/material/select';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 @NgModule({
-  declarations: [CaptainComponent, InfoComponent, PaymentComponent],
+  declarations: [CaptainComponent, InfoComponent, PaymentComponent, ConfirmationComponent],
   imports: [
     CommonModule,
     CaptainRoutingModule,

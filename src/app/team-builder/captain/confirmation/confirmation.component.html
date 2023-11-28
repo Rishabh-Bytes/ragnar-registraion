@@ -1,0 +1,55 @@
+<div>
+  <div>
+    <form flex="100" class="cus-confirm-form" style="text-align: unset">
+      <div class="cong-upr">
+        <h2>Congratulations!</h2>
+        <p>
+          You are now registered to run a Ragnar
+          <span style="text-transform: capitalize"
+            >{{ state.registrationConfig.type.toLowerCase() }}!</span
+          >
+        </p>
+      </div>
+      <div class="cong-under">
+        <h1>
+          <span
+            (ng-bind)="
+              UtilsService.getTrustedHtml(
+                state.registrationConfig.funnel?.confirmation[0].description
+              )
+            "
+          ></span>
+        </h1>
+        <h1
+          *ngIf="!state.registrationConfig.funnel?.confirmation[0].description"
+        >
+          Congrats! Your Team Is registered! Now What?
+        </h1>
+      </div>
+    </form>
+  </div>
+
+  <div class="help-container">
+    <h2 class="thank-note">Thank You For Your Order!</h2>
+
+    <div class="order-info">
+      <h3 class="order-number">Order # {{ state.order?.orderId }}</h3>
+      <p class="confirmation">A confirmation email has been sent</p>
+    </div>
+
+    <div class="event-info">
+      <p>
+        {{ state.registrationConfig.name }} - {{ state.team.type | titlecase }}
+      </p>
+      <br />
+      <p>
+        {{ state.registrationConfig.startDate | dateFormat : "full" }} to
+        {{ state.registrationConfig.endDate | dateFormat : "full" }}
+      </p>
+    </div>
+
+    <div class="order-total">
+      Order Total: {{ state.price?.total | money : 2 }}
+    </div>
+  </div>
+</div>
